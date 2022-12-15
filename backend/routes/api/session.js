@@ -38,6 +38,7 @@ router.delete(
     }
   );
 
+  
   router.get(
     '/',
     restoreUser,
