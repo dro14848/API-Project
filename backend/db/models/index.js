@@ -36,3 +36,17 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;
+
+//migration commands
+// npx sequelize-cli model:generate --name Booking --attributes spotId:integer,userId:integer,startDate:date,endDate:date
+// npx sequelize-cli model:generate --name Spot --attributes ownerId:integer,address:string,city:string,state:string,country:string,lat:decimal,lng:decimal,name:string,description:string,price:decimal
+// npx sequelize-cli model:generate --name Review --attributes spotId:integer,userId:integer,review:string,stars:integer
+// npx sequelize-cli model:generate --name SpotImage --attributes spotId:integer,url:string,preview:boolean
+// npx sequelize-cli model:generate --name ReviewImage --attributes reviewId:integer,url:string
+
+//seeders commands
+// npx sequelize-cli seed:generate --name demo-spot
+// npx sequelize-cli seed:generate --name demo-booking
+// npx sequelize-cli seed:generate --name demo-review
+// npx sequelize-cli seed:generate --name demo-spot-image
+// npx sequelize-cli seed:generate --name demo-review-image
