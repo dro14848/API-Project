@@ -43,3 +43,10 @@ module.exports = db;
 // npx sequelize-cli model:generate --name Review --attributes spotId:integer,userId:integer,review:string,stars:integer
 // npx sequelize-cli model:generate --name SpotImage --attributes spotId:integer,url:string,preview:boolean
 // npx sequelize-cli model:generate --name ReviewImage --attributes reviewId:integer,url:string
+
+//seeders commands
+// npx sequelize-cli seed:generate --name demo-spot
+// npx sequelize-cli seed:generate --name demo-booking
+// npx sequelize-cli seed:generate --name demo-review
+// npx sequelize-cli seed:generate --name demo-spot-image
+// npx sequelize-cli seed:generate --name demo-review-image
