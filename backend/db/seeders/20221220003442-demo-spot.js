@@ -13,15 +13,15 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         ownerId: 1,
-        address: '123 Disney Lane',
-        city: 'San Francisco',
-        state: 'California',
+        address: '5241 w hillsboro blv',
+        city: 'Coconut Creek',
+        state: 'Florida',
         country: 'USA',
-        lat:  37.7645358,
-        lng: -122.4730327,
-        name: 'App Academy',
-        description: 'Place where web developers are created',
-        price: 21,
+        lat:  -47.76358,
+        lng: -12.4727,
+        name: 'New AP',
+        description: 'what I miss the most',
+        price: 1350,
 
       },
       {

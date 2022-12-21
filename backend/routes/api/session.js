@@ -65,7 +65,7 @@ router.delete(
       await setTokenCookie(res, user);
   
       return res.json({
-        user: user
+        user:user
       });
     }
   );
