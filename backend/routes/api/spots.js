@@ -3,6 +3,7 @@ const router = express.Router();
 const { Spot, User, SpotImage, Review, ReviewImage, Booking, Sequelize } = require('../../db/models');
 const sequelize = require('sequelize');
 const { check } = require('express-validator');
+const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize');
 const spot = require('../../db/models/spot');
@@ -59,6 +60,17 @@ router.get('/', async(req, res) => {
     res.json({Spots: spots})
 })
 
+//create spot
 
+
+router.post('/', requireAuth, async(req, res) => {
+    //check owner
+    const ownerId = req.user.id
+
+    //create spot based on owner id
+    const newSpot = await Spot.create({ownerId,...req.body})
+
+    res.json(newSpot)
+})
 
 module.exports = router;
