@@ -57,6 +57,13 @@ router.get('/', async(req, res) => {
     // })
     // console.log(testArr)
 
+    //LAZY LOAD FOR LIVE
+// find all spots
+// loop through spots
+// get avg rating
+// get rest of data (avg, previewImage)
+//push spot into payload
+// res.json(payload)
     res.json({Spots: spots})
 })
 
@@ -72,5 +79,26 @@ router.post('/', requireAuth, async(req, res) => {
 
     res.json(newSpot)
 })
+
+
+//create image for spot
+router.post('/:spotid/images', requireAuth, async(req, res) => {
+    const { url, preview } = req.body;
+    const spot = await Spot.findByPk(req.params.spotId)
+
+    console.log(spot)
+    if(!spot){
+        res.statusCode = 404;
+        res.json({
+            "message": "Spot couldn't be found",
+            "statusCode":"404"
+        })
+    }
+
+    res.json(spotId)
+
+})
+
+
 
 module.exports = router;
