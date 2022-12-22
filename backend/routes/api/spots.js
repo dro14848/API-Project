@@ -76,11 +76,11 @@ router.post('/', requireAuth, async(req, res) => {
 
 
 //create image for spot
-router.post('/:spotid/images', requireAuth, async(req, res) => {
+router.post('/:spotId/images', requireAuth, async(req, res) => {
     const { url, preview } = req.body;
     const spot = await Spot.findByPk(req.params.spotId)
 
-    console.log(spot)
+    // console.log(spot)
     if(!spot){
         res.statusCode = 404;
         res.json({
@@ -89,7 +89,16 @@ router.post('/:spotid/images', requireAuth, async(req, res) => {
         })
     }
 
-    res.json(spotId)
+    const spotId = req.params.spotId;
+    const newImage = await SpotImage.create({
+        spotId,
+        url,
+        preview
+    })
+
+    const addImg = await SpotImage.findByPk(newImage.id,{attributes:['id', 'url', 'preview']})
+
+    res.json(addImg)
 
 })
 
