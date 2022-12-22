@@ -28,7 +28,7 @@ router.get('/', async(req, res) => {
                 [Sequelize.fn("AVG", sequelize.col("Reviews.stars")),"avgRating" ]
             ]
         },
-        // group: ["Spot.id", "Reviews.id", "SpotImages.id"]
+        group: ["Spot.id", "Reviews.id", "SpotImages.id"]
     })
 
     let allspots = [];
