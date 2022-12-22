@@ -28,7 +28,7 @@ router.get('/', async(req, res) => {
                 [Sequelize.fn("AVG", sequelize.col("Reviews.stars")),"avgRating" ]
             ]
         },
-        // group: ["Spot.id", "Reviews.id", "SpotImages.id"]
+        group: ["Spot.id", "Reviews.id", "SpotImages.id"]
     })
 
     let allspots = [];
@@ -50,6 +50,9 @@ router.get('/', async(req, res) => {
         })
        if(!spot.avgRating){
         spot.avgRating = "No Reviews yet"
+       }
+       if(!spot.previewImage){
+        spot.previewImage = "No Preview Image"
        }
        delete spot.SpotImages
        delete spot.Reviews
