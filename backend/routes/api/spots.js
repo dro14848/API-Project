@@ -12,59 +12,50 @@ const spot = require('../../db/models/spot');
 //get all spots
 router.get('/', async(req, res) => {
     const spots = await Spot.findAll({
-        attributes: {
-            include: [
-                [Sequelize.col("SpotImages.url"), "previewImage"],
-                [Sequelize.fn("AVG", sequelize.col("Reviews.stars")),"avgRating" ]
-            ]
-        },
         include: [
             
             {
                 model: Review,
-                attributes: []
+                // attributes: []
             },
             {
-                model: SpotImage,
-                attributes: []
+                model: SpotImage
             }
         ],
-        group: ["Spot.id"]
+        attributes: {
+            include: [
+                // [Sequelize.col("SpotImages.url"), "previewImage"],
+                [Sequelize.fn("AVG", sequelize.col("Reviews.stars")),"avgRating" ]
+            ]
+        },
+        // group: ["Spot.id", "Reviews.id", "SpotImages.id"]
     })
-    //test array for querys
-    // let testArr = [];
-    // //empty array to push json into
-    // let spotList = [];
-    // spots.forEach(spot => {
-    //     spotList.push(spot.toJSON())
-    // })
 
-    
-    // spotList.forEach(spot =>{
-    //     spot.SpotImages.forEach(image => {
-    //         // console.log(image.preview)
-    //         if(image.preview === true){
-    //             // console.log(image.url)
-    //             spot.previewImage = image.url
-                
-    //         }
-    //     })
-    //     spot.Reviews.forEach(avg => {
-    //         console.log(avg.stars)
-    //     })
-    //     delete spot.Reviews
-    //     delete spot.SpotImages
-    // })
-    // console.log(testArr)
+    let allspots = [];
+    spots.forEach(spot => {
 
-    //LAZY LOAD FOR LIVE
-// find all spots
-// loop through spots
-// get avg rating
-// get rest of data (avg, previewImage)
-//push spot into payload
-// res.json(payload)
-    res.json({Spots: spots})
+        allspots.push(spot.toJSON())
+    })
+
+    let listSpots = []
+    allspots.forEach(async spot =>{
+        //parse to int or will not work
+       spot.avgRating = parseInt(spot.avgRating)
+        spot.SpotImages.forEach(img => {
+            console.log(img.url)
+            if(img.preview === true){
+                spot.previewImage = img.url
+            }
+
+        })
+       if(!spot.avgRating){
+        spot.avgRating = "No Reviews yet"
+       }
+       delete spot.SpotImages
+       delete spot.Reviews
+    })
+
+    res.json({Spots: allspots})
 })
 
 //create spot
