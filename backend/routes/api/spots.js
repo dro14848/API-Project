@@ -14,10 +14,10 @@ router.get('/', async(req, res) => {
     const spots = await Spot.findAll({
         include: [
             
-            // {
-            //     model: Review,
-            //     // attributes: []
-            // },
+            {
+                model: Review,
+                // attributes: []
+            },
             {
                 model: SpotImage
             }
@@ -47,7 +47,7 @@ router.get('/', async(req, res) => {
             ]
         },
         // raw: true,
-        // group: ["Review.id"]
+        group: ["Review.id"]
        })
     //    console.log(reviews)
        spot.avgRating = reviews[0].dataValues.avgRating
