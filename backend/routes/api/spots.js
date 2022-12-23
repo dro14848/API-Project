@@ -7,6 +7,7 @@ const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize');
 const spot = require('../../db/models/spot');
+const e = require('express');
 
 
 //get all spots
@@ -149,7 +150,6 @@ router.get('/current', requireAuth, async(req,res) => {
         attributes: ["stars"],
         raw: true,
        })
-    //    console.log(reviews)
        let count = 0;
        reviews.forEach(rating =>{
         count += rating.stars
@@ -185,43 +185,48 @@ router.get('/current', requireAuth, async(req,res) => {
 })
 
 //get spot by spotId
-router.get('/:spotId', async(req,res) => {
-    const { spotId } = req.params
+router.get('/:spotId', async(req,res,next) => {
 
-    let spots = await Spot.findByPk(spotId, {
-        include: [
-            {
-                model: Review,
-                attributes: []
-            },
-            {
-                model: SpotImage,
-                attributes: ["id", "url", "preview"]
-            },
-            {
-                model: User,
-                as: "Owner",
-                attributes: ["id", "firstName", "lastName"]
-            }
-        ],
-        // attributes: {
-        //     include: [
-        //         [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
-        //         [sequelize.fn("COUNT", sequelize.col('Reviews.spotId')), "numReviews"]
-        //     ]
-        // },
-        group: ["Spot.id", "Reviews.id", "SpotImages.id", 'Owner.id']
+    const spots = await Spot.findByPk(req.params.spotId, {
+        raw:true
+    })
+    
+    
+    if(!spots){
+      const err = new Error("Spot couldn't be found");
+      err.status = 404
+      return next(err)
+    }
+    const reviews = await Review.findAll({
+        where: {spotId: spots.id},
+        attributes: ["stars", "review"],
+        raw:true
+    })
+    
+    let count = 0;
+    let total = reviews.length
+    reviews.forEach(rating =>{
+        count += rating.stars
+    })
+    
+    spots.numReviews = reviews.length;
+    spots.avgStarRating = count / total;
+    
+   const img = await SpotImage.findAll({
+    where: { preview: true, spotId: spots.id},
+    attributes:["id", "url", "preview"]
+   })
+
+   spots.SpotImages = img;
+
+    const owner = await User.findOne({
+        where: {id: spots.ownerId},
+        attributes: ["id","firstName","lastName"]
     })
 
-    // need to test live
-    if(!spots){
-        res.statusCode = 404;
-        res.json({
-            "message": "Spot couldn't be found",
-            "statusCode": 404
-        })
-    }
-    console.log(spots)
+    spots.Owner = owner 
+
+
     res.json(spots)
 })
 
