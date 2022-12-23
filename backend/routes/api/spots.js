@@ -6,8 +6,40 @@ const { check } = require('express-validator');
 const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize');
-const spot = require('../../db/models/spot');
-const e = require('express');
+
+//validators
+//validate spot
+const validateSpot = [
+    check('address')
+        .notEmpty()
+        .withMessage('Street address is required'),
+    check('city')
+        .notEmpty()
+        .withMessage('City i required'),
+    check('state')
+        .notEmpty()
+        .withMessage('State is required'),
+    check('country')
+        .notEmpty()
+        .withMessage('Country is required'),
+    check('lat')
+        .isDecimal()
+        .withMessage('LAtitude is not valid'),
+    check('lng')
+        .isDecimal()
+        .withMessage('Longitude is not valid'),
+    check('name')
+        .isLength({max:150})
+        .withMessage('Name must be less than 50 characters'),
+    check('description')
+        .notEmpty()
+        .withMessage('Decription is required'),
+    check('price')
+        .notEmpty()
+        .isInt()
+        .withMessage('Price per day is '),
+    handleValidationErrors
+]
 
 
 //get all spots
@@ -233,7 +265,7 @@ router.get('/:spotId', async(req,res) => {
 })
 
 //edit spot
-router.put('/:spotId', requireAuth, async(req, res)=> {
+router.put('/:spotId', validateSpot, requireAuth, async(req, res)=> {
     const {address, city, state, country, lat, lng, name, description, price } = req.body;
 
     const change = await Spot.findByPk(req.params.spotId);
@@ -245,7 +277,7 @@ router.put('/:spotId', requireAuth, async(req, res)=> {
         })
     }
     //need to add validation
-    
+
     if(address) change.address = address;
     if(city) change.city = city;
     if(state) change.state = state;
