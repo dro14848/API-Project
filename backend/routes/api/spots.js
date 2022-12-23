@@ -234,7 +234,31 @@ router.get('/:spotId', async(req,res) => {
 
 //edit spot
 router.put('/:spotId', requireAuth, async(req, res)=> {
+    const {address, city, state, country, lat, lng, name, description, price } = req.body;
+
+    const change = await Spot.findByPk(req.params.spotId);
+    if(!change){
+        res.statusCode = 404
+        res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+    //need to add validation
     
+    if(address) change.address = address;
+    if(city) change.city = city;
+    if(state) change.state = state;
+    if(country) change.country = country;
+    if(lat) change.lat = lat;
+    if(lng) change.lgn = lng;
+    if(name) change.name = name;
+    if(description) change.description = description;
+    if(price) change.price = price;
+
+    await change.save();
+
+    res.json(change)
 })
 
 module.exports = router;
