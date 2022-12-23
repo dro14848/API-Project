@@ -22,13 +22,6 @@ router.get('/', async(req, res) => {
                 model: SpotImage
             }
         ],
-        attributes: {
-            include: [
-                // [Sequelize.col("SpotImages.url"), "previewImage"],
-                [Sequelize.fn("AVG", sequelize.col("Reviews.stars")),"avgRating" ]
-            ]
-        },
-        group: ["Spot.id", "Reviews.id", "SpotImages.id"]
     })
 
     let allspots = [];
@@ -37,10 +30,24 @@ router.get('/', async(req, res) => {
         allspots.push(spot.toJSON())
     })
 
-    let listSpots = []
-    allspots.forEach(async spot =>{
-        //parse to int or will not work
-       spot.avgRating = parseInt(spot.avgRating)
+   
+    for (let i =0; i < allspots.length; i++) {
+        let spot = allspots[i]
+
+       const reviews = await Review.findAll({
+        where:{
+            spotId: spot.id
+        },
+        attributes: {
+            include: [
+            [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
+            ]
+        },
+        // raw: true,
+        // group: ["Reviews.id"]
+       })
+    //    console.log(reviews)
+       spot.avgRating = reviews[0].dataValues.avgRating
         spot.SpotImages.forEach(img => {
             console.log(img.url)
             if(img.preview === true){
@@ -56,14 +63,12 @@ router.get('/', async(req, res) => {
        }
        delete spot.SpotImages
        delete spot.Reviews
-    })
+    }
 
     res.json({Spots: allspots})
 })
 
 //create spot
-
-
 router.post('/', requireAuth, async(req, res) => {
     //check owner
     const ownerId = req.user.id
@@ -120,11 +125,6 @@ router.get('/current', requireAuth, async(req,res) => {
                 model: SpotImage
             }
         ],
-        attributes: {
-            include: [
-                [Sequelize.fn("AVG", sequelize.col("Reviews.stars")),"avgRating" ]
-            ]
-        },
         group: ["Spot.id", "Reviews.id", "SpotImages.id"]
     })
 
@@ -133,8 +133,21 @@ router.get('/current', requireAuth, async(req,res) => {
         userSpot.push(user.toJSON())
     })
 
-    userSpot.forEach(spot =>{
-        spot.avgRating = parseInt(spot.avgRating)
+    for (let i =0; i < userSpot.length; i++) {
+        let spot = userSpot[i]
+
+       const reviews = await Review.findAll({
+        where:{
+            spotId: spot.id
+        },
+        attributes: {
+            include: [
+            [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
+            ]
+        },
+       })
+    //    console.log(reviews)
+       spot.avgRating = reviews[0].dataValues.avgRating
         spot.SpotImages.forEach(img => {
             console.log(img.url)
             if(img.preview === true){
@@ -148,10 +161,10 @@ router.get('/current', requireAuth, async(req,res) => {
        if(!spot.previewImage){
         spot.previewImage = "No Preview Image"
        }
+
        delete spot.SpotImages
        delete spot.Reviews
-    })
-console.log(userSpot)
+    }
 
 
     res.json({Spots: userSpot})
@@ -197,8 +210,13 @@ router.get('/:spotId', async(req,res) => {
             "statusCode": 404
         })
     }
-
+    console.log(spots)
     res.json(spots)
+})
+
+//edit spot
+router.put('/:spotId', requireAuth, async(req, res)=> {
+    
 })
 
 module.exports = router;
