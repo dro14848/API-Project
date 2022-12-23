@@ -6,9 +6,51 @@ const { check } = require('express-validator');
 const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize');
-const spot = require('../../db/models/spot');
-const e = require('express');
 
+//validators
+//validate spot
+const validateSpot = [
+    check('address')
+        .notEmpty()
+        .withMessage('Street address is required'),
+    check('city')
+        .notEmpty()
+        .withMessage('City i required'),
+    check('state')
+        .notEmpty()
+        .withMessage('State is required'),
+    check('country')
+        .notEmpty()
+        .withMessage('Country is required'),
+    check('lat')
+        .isDecimal()
+        .withMessage('LAtitude is not valid'),
+    check('lng')
+        .isDecimal()
+        .withMessage('Longitude is not valid'),
+    check('name')
+        .isLength({max:150})
+        .withMessage('Name must be less than 50 characters'),
+    check('description')
+        .notEmpty()
+        .withMessage('Decription is required'),
+    check('price')
+        .notEmpty()
+        .isInt()
+        .withMessage('Price per day is '),
+    handleValidationErrors
+]
+
+//validate review
+const validateReview = [
+    check('review')
+        .notEmpty()
+        .withMessage('Review text is required'),
+    check('stars')
+        .isInt({min:1, max:5})
+        .withMessage('Stars mut be an integer from 1 to 5'),
+    handleValidationErrors
+]
 
 //get all spots
 router.get('/', async(req, res) => {
@@ -185,54 +227,92 @@ router.get('/current', requireAuth, async(req,res) => {
 })
 
 //get spot by spotId
-router.get('/:spotId', async(req,res,next) => {
+router.get('/:spotId', async(req,res) => {
+    const { spotId } = req.params
 
     const spots = await Spot.findByPk(req.params.spotId, {
         raw:true
     })
-    
-    
+
+    // need to test live
     if(!spots){
-      const err = new Error("Spot couldn't be found");
-      err.status = 404
-      return next(err)
+        res.statusCode = 404;
+        res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
     }
-    const reviews = await Review.findAll({
-        where: {spotId: spots.id},
-        attributes: ["stars", "review"],
-        raw:true
-    })
-    
-    let count = 0;
-    let total = reviews.length
-    reviews.forEach(rating =>{
-        count += rating.stars
-    })
-    
-    spots.numReviews = reviews.length;
-    spots.avgStarRating = count / total;
-    
-   const img = await SpotImage.findAll({
-    where: { preview: true, spotId: spots.id},
-    attributes:["id", "url", "preview"]
-   })
-
-   spots.SpotImages = img;
-
-    const owner = await User.findOne({
-        where: {id: spots.ownerId},
-        attributes: ["id","firstName","lastName"]
-    })
-
-    spots.Owner = owner 
-
-
+    console.log(spots)
     res.json(spots)
 })
 
 //edit spot
-router.put('/:spotId', requireAuth, async(req, res)=> {
-    
+router.put('/:spotId', validateSpot, requireAuth, async(req, res)=> {
+    const {address, city, state, country, lat, lng, name, description, price } = req.body;
+
+    const change = await Spot.findByPk(req.params.spotId);
+    if(!change){
+        res.statusCode = 404
+        res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+    //need to add validation
+
+    if(address) change.address = address;
+    if(city) change.city = city;
+    if(state) change.state = state;
+    if(country) change.country = country;
+    if(lat) change.lat = lat;
+    if(lng) change.lgn = lng;
+    if(name) change.name = name;
+    if(description) change.description = description;
+    if(price) change.price = price;
+
+    await change.save();
+
+    res.json(change)
 })
+
+//create review for pot
+router.post('/:spotId/reviews', validateReview, requireAuth, async(req,res) =>{
+    const { review, stars } = req.body
+    const change = await Spot.findByPk(req.params.spotId)
+    
+    if(!change){
+        res.statusCode = 404
+        res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+        //check if user already has review
+        const spotId = req.params.spotId
+        const userId = req.user.id
+
+        const userReview = await Review.findOne({
+            where: {spotId: spotId, userId: userId}
+        })
+        if(userReview){
+            res.statusCode = 403
+            res.json({
+                "message": "User already has a review for this spot",
+                "statusCode": 403
+            })
+        }
+ 
+
+        const newReview = await Review.create({
+            userId: userId,
+            spotId: spotId,
+            review: review,
+            stars: stars,
+        })
+    
+
+        res.json(newReview)
+} )
 
 module.exports = router;
