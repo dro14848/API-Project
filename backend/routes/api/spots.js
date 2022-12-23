@@ -16,7 +16,6 @@ router.get('/', async(req, res) => {
             
             {
                 model: Review,
-                // attributes: []
             },
             {
                 model: SpotImage
@@ -40,18 +39,10 @@ router.get('/', async(req, res) => {
             spotId: spot.id
         },
         attributes:["stars"],
-        // incldue: [
-        //     {model: Review},
-        // ],
-        // attributes: {
-        //     include: [
-        //     [sequelize.fn("AVG", sequelize.col("Review.stars")), "avgRating"]
-        //     ]
-        // },
+    
         raw: true,
-        // group: ["Review.id"]
        })
-       console.log("test reviews",reviews)
+    //    console.log("test reviews",reviews)
 
        let count = 0
        reviews.forEach(rating =>{
@@ -155,14 +146,17 @@ router.get('/current', requireAuth, async(req,res) => {
         where:{
             spotId: spot.id
         },
-        attributes: {
-            include: [
-            [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
-            ]
-        },
+        attributes: ["stars"],
+        raw: true,
        })
     //    console.log(reviews)
-       spot.avgRating = reviews[0].dataValues.avgRating
+       let count = 0;
+       reviews.forEach(rating =>{
+        count += rating.stars
+       })
+
+       const avg = count/reviews.length
+
         spot.SpotImages.forEach(img => {
             console.log(img.url)
             if(img.preview === true){
@@ -172,6 +166,8 @@ router.get('/current', requireAuth, async(req,res) => {
         })
        if(!spot.avgRating){
         spot.avgRating = "No Reviews yet"
+       }else {
+        spot.avgRating = avg
        }
        if(!spot.previewImage){
         spot.previewImage = "No Preview Image"
@@ -208,12 +204,12 @@ router.get('/:spotId', async(req,res) => {
                 attributes: ["id", "firstName", "lastName"]
             }
         ],
-        attributes: {
-            include: [
-                [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
-                [sequelize.fn("COUNT", sequelize.col('Reviews.spotId')), "numReviews"]
-            ]
-        },
+        // attributes: {
+        //     include: [
+        //         [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
+        //         [sequelize.fn("COUNT", sequelize.col('Reviews.spotId')), "numReviews"]
+        //     ]
+        // },
         group: ["Spot.id", "Reviews.id", "SpotImages.id", 'Owner.id']
     })
 
