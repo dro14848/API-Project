@@ -31,27 +31,36 @@ router.get('/', async(req, res) => {
         allspots.push(spot.toJSON())
     })
 
-   
     for (let i =0; i < allspots.length; i++) {
         let spot = allspots[i]
-
+        
+        // console.log(allspots.reviews)
        const reviews = await Review.findAll({
         where:{
             spotId: spot.id
         },
-        incldue: [
-            {model: Review},
-        ],
-        attributes: {
-            include: [
-            [sequelize.fn("AVG", sequelize.col("Review.stars")), "avgRating"]
-            ]
-        },
-        // raw: true,
-        group: ["Review.id"]
+        attributes:["stars"],
+        // incldue: [
+        //     {model: Review},
+        // ],
+        // attributes: {
+        //     include: [
+        //     [sequelize.fn("AVG", sequelize.col("Review.stars")), "avgRating"]
+        //     ]
+        // },
+        raw: true,
+        // group: ["Review.id"]
        })
-    //    console.log(reviews)
-       spot.avgRating = reviews[0].dataValues.avgRating
+       console.log("test reviews",reviews)
+
+       let count = 0
+       reviews.forEach(rating =>{
+        count += rating.stars
+       })
+
+       const avg = count/reviews.length;
+
+    //    spot.avgRating = review[0].dataValues.avgRating
         spot.SpotImages.forEach(img => {
             console.log(img.url)
             if(img.preview === true){
@@ -59,8 +68,10 @@ router.get('/', async(req, res) => {
             }
 
         })
-       if(!spot.avgRating){
+       if(!avg){
         spot.avgRating = "No Reviews yet"
+       }else {
+        spot.avgRating = avg
        }
        if(!spot.previewImage){
         spot.previewImage = "No Preview Image"
