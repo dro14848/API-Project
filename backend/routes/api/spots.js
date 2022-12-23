@@ -22,6 +22,7 @@ router.get('/', async(req, res) => {
                 model: SpotImage
             }
         ],
+        group: ["Spot.id", "Reviews.id", "SpotImages.id"]
     })
 
     let allspots = [];
