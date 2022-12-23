@@ -228,21 +228,48 @@ router.get('/current', requireAuth, async(req,res) => {
 
 //get spot by spotId
 router.get('/:spotId', async(req,res) => {
-    const { spotId } = req.params
-
     const spots = await Spot.findByPk(req.params.spotId, {
         raw:true
     })
-
-    // need to test live
+    
     if(!spots){
         res.statusCode = 404;
         res.json({
             "message": "Spot couldn't be found",
-            "statusCode": 404
+            "statusCode":"404"
         })
     }
-    console.log(spots)
+    
+    const reviews = await Review.findAll({
+        where: {spotId: spots.id},
+        attributes: ["stars", "review"],
+        raw:true
+    })
+    
+    let count = 0;
+    let total = reviews.length
+    reviews.forEach(rating =>{
+        count += rating.stars
+    })
+    
+    spots.numReviews = reviews.length;
+    spots.avgStarRating = count / total;
+    
+   const img = await SpotImage.findAll({
+    where: { preview: true, spotId: spots.id},
+    attributes:["id", "url", "preview"]
+   })
+
+   spots.SpotImages = img;
+
+    const owner = await User.findOne({
+        where: {id: spots.ownerId},
+        attributes: ["id","firstName","lastName"]
+    })
+
+    spots.Owner = owner 
+
+
     res.json(spots)
 })
 
