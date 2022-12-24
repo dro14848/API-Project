@@ -369,7 +369,7 @@ router.get('/:spotId/reviews', async(req, res) => {
         ]
     })
 
-    res.json(review)
+    res.json({Reviews: review})
 
 })
 
