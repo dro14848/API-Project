@@ -302,7 +302,7 @@ router.put('/:spotId', validateSpot, requireAuth, async(req, res)=> {
     res.json(change)
 })
 
-//create review for pot
+//create review for spot
 router.post('/:spotId/reviews', validateReview, requireAuth, async(req,res) =>{
     const { review, stars } = req.body
     const change = await Spot.findByPk(req.params.spotId)
@@ -341,5 +341,36 @@ router.post('/:spotId/reviews', validateReview, requireAuth, async(req,res) =>{
 
         res.json(newReview)
 } )
+
+// get reviews by spotId
+
+router.get('/:spotId/reviews', async(req, res) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if(!spot){
+        res.statusCode = 404
+        res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    const review = await Review.findAll({
+        where: { spotId: req.params.spotId},
+        include: [
+            {
+                model: User,
+                attributes: ['id', "firstName", "lastName"]
+            },
+            {
+                model: ReviewImage,
+                attributes: ["id","url"]
+            }
+        ]
+    })
+
+    res.json(review)
+
+})
 
 module.exports = router;
