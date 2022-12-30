@@ -36,7 +36,7 @@ router.use('/users', usersRouter);
 router.use('/spots', spotsRouter);
 router.use('/reviews', reviewRouter);
 router.use('/bookings', bookingsRouter)
-router.use('./spot-image', spotImagesRouter);
+router.use('/spot-images', spotImagesRouter);
 router.use('/review-images', reviewImagesRouter)
 
 

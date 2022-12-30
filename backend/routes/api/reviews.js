@@ -78,7 +78,7 @@ router.get('/current', requireAuth, async(req, res) => {
     })
 
     let userReview = [];
-    //loop over reviews, edit and conver to json in 1 loop
+    //loop over reviews, edit and convert to json in 1 loop
     for(let review of Reviews){
         //convert to json
         const userReviews = review.toJSON();
