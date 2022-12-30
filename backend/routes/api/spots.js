@@ -139,7 +139,7 @@ router.post('/:spotId/images', requireAuth, async(req, res) => {
         res.statusCode = 404;
         res.json({
             "message": "Spot couldn't be found",
-            "statusCode":"404"
+            "statusCode":404
         })
     }
 
@@ -236,7 +236,7 @@ router.get('/:spotId', async(req,res) => {
         res.statusCode = 404;
         res.json({
             "message": "Spot couldn't be found",
-            "statusCode":"404"
+            "statusCode":404
         })
     }
     

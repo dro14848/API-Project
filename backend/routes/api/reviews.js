@@ -7,7 +7,15 @@ const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize');
 
-
+//validate Review Edit 
+const validateReview = [
+    check("Review")
+        .notEmpty()
+        .withMessage("Review Text is Required"),
+    check("stars")
+        .isInt({min:1, max: 5})
+        .withMessage("Stars must be an integer from 1 to 5")
+]
 
 //create image for review
 
@@ -98,5 +106,56 @@ router.get('/current', requireAuth, async(req, res) => {
     res.json({Reviews: userReview})
 })
 
+
+// edit Review
+
+router.put('/:reviewId', validateReview, requireAuth, async(req, res) => {
+    const reviewId = req.params.reviewId;
+    const newReview = await Review.findByPk(reviewId);
+    const { review, stars} = req.body;
+
+
+    if(!newReview) {
+        res.statusCode = 404;
+        res.json({
+            "message": "Review Couldn't be found",
+            "statusCode": 404
+        })
+    } else {
+        await newReview.update({
+            review,
+            stars
+        })
+        res.json(newReview)
+    }
+    
+})
+
+
+// delete Review
+
+router.delete('/:reviewId', requireAuth, async(req, res) => {
+    const reviewId = req.params.reviewId;
+    const review = await Review.findByPk(reviewId, {
+        where: {
+            userId: req.user.id
+        }
+    })
+     if(!review){
+        res.statusCode = 404;
+        res.json({
+            "message": "Review couldn't be found",
+            "statusCode": 404
+        })
+     }
+
+     await review.destroy()
+     res.statusCode = 200;
+     res.json({
+        "message": "Succesfully deleted",
+        "statusCode": 200
+     })
+
+})
 
 module.exports = router;
