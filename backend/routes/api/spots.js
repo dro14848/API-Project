@@ -33,7 +33,7 @@ const validateSpot = [
         .withMessage('Name must be less than 50 characters'),
     check('description')
         .notEmpty()
-        .withMessage('Decription is required'),
+        .withMessage('Description is required'),
     check('price')
         .notEmpty()
         .isInt()
@@ -48,7 +48,7 @@ const validateReview = [
         .withMessage('Review text is required'),
     check('stars')
         .isInt({min:1, max:5})
-        .withMessage('Stars mut be an integer from 1 to 5'),
+        .withMessage('Stars must be an integer from 1 to 5'),
     handleValidationErrors
 ]
 
