@@ -9,7 +9,9 @@ const { Op } = require('sequelize');
 
 
 
+//get all of the current users's bookings
 
+router.get("/current")
 
 
 module.exports = router;
