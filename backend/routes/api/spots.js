@@ -372,6 +372,42 @@ router.get('/:spotId/reviews', async(req, res) => {
     res.json({Reviews})
 
 })
+// get all bookings for a spot based on spotId
+
+router.get('/:spotId/bookings', requireAuth, async(req, res)=> {
+    const booking = await Spot.findByPk(req.params.spotId);
+
+    if(!booking){
+        res.statusCode = 404
+        res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    //check if user is owner of spot or not
+
+    if(booking.ownerId === req.user.id){
+        const Bookings = await Booking.findAll({
+            where: {spotId: req.params.spotId},
+            include: {
+                model: User,
+                attributes:['id', "firstName", "lastName"]
+            }
+        })
+
+        res.json({Bookings})
+    }
+
+    if(booking.ownerId !== req.user.id){
+        const Bookings = await Booking.findAll({
+            where: {spotId: req.params.spotId},
+            attributes: ["spotId", "startDate", "endDate"]
+        })
+        res.json({Bookings})
+    }
+
+})
 
 //create booking based on spotId
 
