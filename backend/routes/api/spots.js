@@ -372,7 +372,6 @@ router.get('/:spotId/reviews', async(req, res) => {
     res.json({Reviews})
 
 })
-
 // get all bookings for a spot based on spotId
 
 router.get('/:spotId/bookings', requireAuth, async(req, res)=> {
