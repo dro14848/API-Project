@@ -27,7 +27,6 @@ module.exports = {
         endDate: "2022-1-12"
       }
 
-
     ], {})
   },
  
