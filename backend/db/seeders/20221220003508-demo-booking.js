@@ -14,7 +14,6 @@ module.exports = {
         userId: '1',
 =======
         userId: 1,
->>>>>>> dev
         startDate: "2022-1-11",
         endDate: "2022-1-12"
       },
@@ -24,7 +23,6 @@ module.exports = {
         userId: '2',
 =======
         userId: 2,
->>>>>>> dev
         startDate: "2022-1-11",
         endDate: "2022-1-12"
       },

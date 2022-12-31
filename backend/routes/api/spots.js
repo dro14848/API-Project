@@ -355,7 +355,7 @@ router.get('/:spotId/reviews', async(req, res) => {
         })
     }
 
-    const review = await Review.findAll({
+    const Reviews = await Review.findAll({
         where: { spotId: req.params.spotId},
         include: [
             {
@@ -369,8 +369,14 @@ router.get('/:spotId/reviews', async(req, res) => {
         ]
     })
 
-    res.json({Reviews: review})
+    res.json(review)
 
 })
 
+//create booking based on spotId
+
+router.post('/:spotId/bookings',requireAuth, async(req, res) => {
+    const { startDate, endDate} = req.body;
+    
+} )
 module.exports = router;
