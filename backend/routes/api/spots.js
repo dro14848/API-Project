@@ -386,17 +386,17 @@ router.get('/:spotId/bookings', requireAuth, async(req, res)=> {
     }
 
     //check if user is owner of spot or not
-
+    userSpot = req.params.spotId
     if(booking.ownerId === req.user.id){
-        const Bookings = await Booking.findAll({
-            where: {spotId: req.params.spotId},
+        const bookings = await Booking.findAll({
+            where: {spotId: userSpot},
             include: {
                 model: User,
-                attributes:['id', "firstName", "lastName"]
+                attributes:["id", "firstName", "lastName"]
             }
         })
-
-        res.json({Bookings})
+        // {Bookings: bookings}
+        res.json({Bookings: bookings})
     }
 
     if(booking.ownerId !== req.user.id){
@@ -435,6 +435,16 @@ router.post('/:spotId/bookings',requireAuth, async(req, res) => {
                 "endDate":"endDate cannot be on or before startDate"
             }
         })
+    }
+
+    if(req.user.id === spot.ownerId){
+        res.statusCode = 403
+        res.json({
+            "message": "You cannot create a booking for a spot you own",
+            "statusCode": 403
+
+        })
+
     }
 
     //check all bookings for this spot
@@ -523,7 +533,7 @@ router.delete("/:spotId", requireAuth, async(req, res)=>{
             "statusCode": 200
         })
     } else {
-        res.statuscode = 403
+        res.statusCode = 403
         res.json({
             "message":"Spot does not belong to user",
             "statusCode": 403

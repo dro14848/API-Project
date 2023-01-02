@@ -27,7 +27,7 @@ router.post('/:reviewId/images',requireAuth,  async(req, res) => {
     if(!review){
         res.statusCode = 404;
         res.json({
-            "mesage": "Review couldn't be found",
+            "message": "Review couldn't be found",
             "statusCode": 404
         })
     }
@@ -61,6 +61,7 @@ router.get('/current', requireAuth, async(req, res) => {
 
     const Reviews = await Review.findAll({
         where: { userId: currentUser},
+        
         include: [
             {
                 model: User,
@@ -84,7 +85,7 @@ router.get('/current', requireAuth, async(req, res) => {
         const userReviews = review.toJSON();
 
         const previewImage = await SpotImage.findOne({
-            where: {spotId: review.Spot.id, preview: true}
+            where: {spotId: review.Spot.id, preview: true},
         });
 
         if(!previewImage){
