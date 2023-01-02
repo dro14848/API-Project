@@ -130,7 +130,9 @@ router.put('/:bookingId', requireAuth, async(req, res)=> {
 
 //delete booking
 router.delete('/:bookingId', requireAuth, async(req, res)=>{
-    const booking = await Booking.findByPk(req.params.bookingId);
+    const booking = await Booking.findOne({
+        where: {id: req.params.bookingId}
+    })
 
     if(!booking){
         res.statusCode = 404;
@@ -141,7 +143,9 @@ router.delete('/:bookingId', requireAuth, async(req, res)=>{
     }
 
         //check if user is owner of spot or booking
-        const spot = await Spot.findByPk(booking.spotId)
+        const spot = await Spot.findOne({
+            where: {id: booking.spotId}
+        })
         
 
         if(req.user.id === booking.userId || req.user.id === spot.ownerId){
