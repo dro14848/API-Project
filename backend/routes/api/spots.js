@@ -386,17 +386,17 @@ router.get('/:spotId/bookings', requireAuth, async(req, res)=> {
     }
 
     //check if user is owner of spot or not
-
+    userSpot = req.params.spotId
     if(booking.ownerId === req.user.id){
-        const Bookings = await Booking.findAll({
-            where: {spotId: req.params.spotId},
+        const bookings = await Booking.findAll({
+            where: {spotId: userSpot},
             include: {
                 model: User,
-                attributes:['id', "firstName", "lastName"]
+                attributes:["id", "firstName", "lastName"]
             }
         })
-
-        res.json({Bookings})
+        // {Bookings: bookings}
+        res.json({Bookings: bookings})
     }
 
     if(booking.ownerId !== req.user.id){
@@ -413,6 +413,133 @@ router.get('/:spotId/bookings', requireAuth, async(req, res)=> {
 
 router.post('/:spotId/bookings',requireAuth, async(req, res) => {
     const { startDate, endDate} = req.body;
-    
+    const start = new Date(startDate).getTime()
+    const end = new Date(endDate).getTime()
+
+    const spot = await Spot.findByPk(req.params.spotId)
+
+    if(!spot){
+        res.statusCode = 404
+        res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    if(start >= end){
+        res.statusCode = 400
+        res.json({
+            "message": "validation Error",
+            "statusCode": 400,
+            "errors": {
+                "endDate":"endDate cannot be on or before startDate"
+            }
+        })
+    }
+
+    if(req.user.id === spot.ownerId){
+        res.statusCode = 403
+        res.json({
+            "message": "You cannot create a booking for a spot you own",
+            "statusCode": 403
+
+        })
+
+    }
+
+    //check all bookings for this spot
+    const bookings = await Booking.findAll({
+        where : {spotId: req.params.spotId},
+        raw: true
+    })
+
+    //check for booking dates conflicts
+
+    for(let ele of bookings){
+        const eleStart = new Date(ele.startDate).getTime()
+        const eleEnd = new Date(ele.endDate).getTime()
+
+        //check start date
+        // if( start > eleStart && start < eleEnd){
+        //     res.statusCode = 403
+        //     res.json({
+        //         "message": "Sorry, this spot is already booked for the specified dates",
+        //         "statusCode": 403,
+        //         "errors": {
+        //             "startDate": "Start date conflicts with an existing booking"
+        //         }
+        //     })
+        // }
+        
+        // //check end dates
+        // if(end > eleStart && end < eleEnd){
+        //     res.statusCode = 403
+        //     res.json({
+        //         "message": "Sorry, this spot is already booked for the specified dates",
+        //         "statusCode": 403,
+        //         "errors": {
+        //             "endDate": "End date conflicts with an existing booking"
+        //         }
+        //     })
+        // }
+
+        //one if statement to make sure there are no conlficts with end dates
+        if(start === eleStart || start > eleStart && start <= eleEnd || end === eleStart || end > eleStart && end <= eleEnd){
+            res.statusCode = 403
+            res.json({
+                "message": "Sorry, this spot is already booked for the specified dates",
+                "statusCode": 403,
+                "errors": {
+                    "startDate": "Start Date conflicts with an existing booking",
+                    "endDate":"End date conflicts with an existing booking"
+                }
+
+        })
+        }
+    }
+
+    const newBooking = await Booking.create({
+        spotId: req.params.spotId,
+        userId: req.user.id,
+        startDate: startDate,
+        endDate: endDate
+    })
+
+    res.json(newBooking)
 } )
+
+//delete a spot
+router.delete("/:spotId", requireAuth, async(req, res)=>{
+    const spot = await Spot.findByPk(req.params.spotId, {
+        where: {
+            userId: req.user.id
+        }
+    })
+
+    if(!spot){
+        res.statusCode = 404;
+        res.json({
+            "message":"Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+    
+    if(spot.ownerId === req.user.id){
+
+        await spot.destroy();
+        res.statusCode = 200;
+        res.json({
+            "message":"Successfully deleted",
+            "statusCode": 200
+        })
+    } else {
+        res.statusCode = 403
+        res.json({
+            "message":"Spot does not belong to user",
+            "statusCode": 403
+        })
+    }
+
+})
+
 module.exports = router;
