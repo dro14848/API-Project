@@ -78,6 +78,7 @@ router.get('/current', requireAuth, async(req, res) => {
             },
             {
                 model: ReviewImage,
+                attributes: ["id", "url"]
             }
         ],
         // group: ["Review.id", "User.id", "Spot.id", "ReviewImages.id"]
@@ -99,12 +100,12 @@ router.get('/current', requireAuth, async(req, res) => {
             userReviews.Spot.previewImage = previewImage.url
         }
 
-        const reviewImg = await ReviewImage.findAll({
-            where: {reviewId: review.id},
-            attributes: ["id", "url"]
-        })
+        // const reviewImg = await ReviewImage.findAll({
+        //     where: {reviewId: review.id},
+        //     attributes: ["id", "url"]
+        // })
         
-        review.ReviewImages = reviewImg
+        // review.ReviewImages = reviewImg
 
         userReview.push(userReviews)
 
