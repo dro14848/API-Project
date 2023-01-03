@@ -176,16 +176,26 @@ router.post('/:spotId/images', requireAuth, async(req, res) => {
         })
     }
 
-    const spotId = req.params.spotId;
-    const newImage = await SpotImage.create({
-        spotId,
-        url,
-        preview
-    })
+    if(spot.ownerId === req.user.id){
+        const spotId = req.params.spotId;
+        const newImage = await SpotImage.create({
+            spotId,
+            url,
+            preview
+        })
+    
+        const addImg = await SpotImage.findByPk(newImage.id,{attributes:['id', 'url', 'preview']})
+    
+        res.json(addImg)
 
-    const addImg = await SpotImage.findByPk(newImage.id,{attributes:['id', 'url', 'preview']})
+    } else {
+        res.statusCode = 403
+        res.json({
+            "message":"Spot does not belong to user",
+            "statusCode": 403
+        })
+    }
 
-    res.json(addImg)
 
 })
 
@@ -316,6 +326,14 @@ router.put('/:spotId', validateSpot, requireAuth, async(req, res)=> {
         res.json({
             "message": "Spot couldn't be found",
             "statusCode": 404
+        })
+    }
+
+    if(change.ownerId !== req.user.id){
+        res.statusCode = 403
+        res.json({
+            "message":"Spot does not belong to user",
+            "statusCode": 403
         })
     }
     //need to add validation
