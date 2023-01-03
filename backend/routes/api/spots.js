@@ -467,7 +467,11 @@ router.post('/:spotId/bookings',requireAuth, async(req, res) => {
     const start = new Date(startDate).getTime()
     const end = new Date(endDate).getTime()
 
-    const spot = await Spot.findByPk(req.params.spotId)
+    const spot = await Spot.findOne({
+        where: {
+            id: req.params.spotId
+        }
+    })
 
     if(!spot){
         res.statusCode = 404
@@ -510,29 +514,7 @@ router.post('/:spotId/bookings',requireAuth, async(req, res) => {
         const eleStart = new Date(ele.startDate).getTime()
         const eleEnd = new Date(ele.endDate).getTime()
 
-        //check start date
-        // if( start > eleStart && start < eleEnd){
-        //     res.statusCode = 403
-        //     res.json({
-        //         "message": "Sorry, this spot is already booked for the specified dates",
-        //         "statusCode": 403,
-        //         "errors": {
-        //             "startDate": "Start date conflicts with an existing booking"
-        //         }
-        //     })
-        // }
-        
-        // //check end dates
-        // if(end > eleStart && end < eleEnd){
-        //     res.statusCode = 403
-        //     res.json({
-        //         "message": "Sorry, this spot is already booked for the specified dates",
-        //         "statusCode": 403,
-        //         "errors": {
-        //             "endDate": "End date conflicts with an existing booking"
-        //         }
-        //     })
-        // }
+ 
 
         //one if statement to make sure there are no conlficts with end dates
         if(start === eleStart || start > eleStart && start <= eleEnd || end === eleStart || end > eleStart && end <= eleEnd){
@@ -556,7 +538,15 @@ router.post('/:spotId/bookings',requireAuth, async(req, res) => {
         endDate: endDate
     })
 
-    res.json(newBooking)
+    res.json({
+        id: newBooking.id,
+        userId: newBooking.userId,
+        spotId: newBooking.spotId,
+        startDate: newBooking.startDate,
+        endDate: newBooking.endDate,
+        createdAt: newBooking.createdAt,
+        updatedAt: newBooking.updatedAt
+    })
 } )
 
 //delete a spot
