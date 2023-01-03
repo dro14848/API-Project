@@ -22,7 +22,12 @@ const validateReview = [
 router.post('/:reviewId/images',requireAuth,  async(req, res) => {
     const reviewId = req.params.reviewId
     const { url } = req.body
-    const review = await Review.findByPk(reviewId)
+    const review = await Review.findOne({
+        where: {
+            id: req.params.reviewId,
+            userId: req.user.id
+        }
+    })
 
     if(!review){
         res.statusCode = 404;
@@ -114,20 +119,27 @@ router.put('/:reviewId', validateReview, requireAuth, async(req, res) => {
     const reviewId = req.params.reviewId;
     const newReview = await Review.findByPk(reviewId);
     const { review, stars} = req.body;
-
-
+    
+    
     if(!newReview) {
         res.statusCode = 404;
         res.json({
             "message": "Review Couldn't be found",
             "statusCode": 404
         })
-    } else {
+    }else if (newReview.userId === req.user.id) {
         await newReview.update({
             review,
             stars
         })
         res.json(newReview)
+
+    } else {
+        res.statusCode = 403
+        res.json({
+            "message": "You are not authorized",
+            "statusCode": 403
+        })
     }
     
 })
@@ -150,12 +162,22 @@ router.delete('/:reviewId', requireAuth, async(req, res) => {
         })
      }
 
-     await review.destroy()
-     res.statusCode = 200;
-     res.json({
-        "message": "Succesfully deleted",
-        "statusCode": 200
-     })
+     if(review.userId === req.user.id){
+         await review.destroy()
+         res.statusCode = 200;
+         res.json({
+            "message": "Succesfully deleted",
+            "statusCode": 200
+         })
+
+     } else {
+        res.statusCode = 403
+        res.json({
+            "message": "You are not Authorized",
+            "statusCode": 403
+        })
+     }
+
 
 })
 

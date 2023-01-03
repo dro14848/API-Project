@@ -54,6 +54,38 @@ const validateReview = [
 
 //get all spots
 router.get('/', async(req, res) => {
+    let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+    const errors = {}
+    const pagination = {};
+    const where = {};
+
+    if(page){
+        if(page <= 0 || isNaN(page)){
+            errors.page = "Page must be greater than or equal to 1"
+        } else if (page > 10) page = 10
+    }else {page = 1}
+
+    if(size){
+        if (size <= 0 || isNaN(size)){
+            errors.size = "Size must be greater than or equal to 1"
+        } else if (size > 20) size = 20
+    } else {size = 20}
+
+
+
+    //catch errors on query
+    if(Object.keys(errors).length) {
+        res.statusCode = 400;
+        res.json({
+            "message": "Validation Error",
+            "statusCode": 400,
+            "errors": errprs
+        })
+    }
+
+
+    pagination.limit = size
+    pagination.offset = size * (page - 1)
     const spots = await Spot.findAll({
         include: [
             
@@ -64,7 +96,8 @@ router.get('/', async(req, res) => {
                 model: SpotImage
             }
         ],
-        group: ["Spot.id", "Reviews.id", "SpotImages.id"]
+        // group: ["Spot.id", "Reviews.id", "SpotImages.id"], 
+        ...pagination
     })
 
     let allspots = [];
@@ -114,7 +147,7 @@ router.get('/', async(req, res) => {
        delete spot.Reviews
     }
 
-    res.json({Spots: allspots})
+    res.json({Spots: allspots, page, size})
 })
 
 //create spot
@@ -143,16 +176,26 @@ router.post('/:spotId/images', requireAuth, async(req, res) => {
         })
     }
 
-    const spotId = req.params.spotId;
-    const newImage = await SpotImage.create({
-        spotId,
-        url,
-        preview
-    })
+    if(spot.ownerId === req.user.id){
+        const spotId = req.params.spotId;
+        const newImage = await SpotImage.create({
+            spotId,
+            url,
+            preview
+        })
+    
+        const addImg = await SpotImage.findByPk(newImage.id,{attributes:['id', 'url', 'preview']})
+    
+        res.json(addImg)
 
-    const addImg = await SpotImage.findByPk(newImage.id,{attributes:['id', 'url', 'preview']})
+    } else {
+        res.statusCode = 403
+        res.json({
+            "message":"Spot does not belong to user",
+            "statusCode": 403
+        })
+    }
 
-    res.json(addImg)
 
 })
 
@@ -283,6 +326,14 @@ router.put('/:spotId', validateSpot, requireAuth, async(req, res)=> {
         res.json({
             "message": "Spot couldn't be found",
             "statusCode": 404
+        })
+    }
+
+    if(change.ownerId !== req.user.id){
+        res.statusCode = 403
+        res.json({
+            "message":"Spot does not belong to user",
+            "statusCode": 403
         })
     }
     //need to add validation
