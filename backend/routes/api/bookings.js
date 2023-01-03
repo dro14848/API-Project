@@ -70,7 +70,8 @@ router.put('/:bookingId', requireAuth, async(req, res)=> {
         where:{ 
             id: req.params.bookingId,
             userId: req.user.id
-        }
+        },
+        attributes:["id", "spotId","userId","startDate","endDate","createdAt","updatedAt"],
     })
 
     if(!booking){
