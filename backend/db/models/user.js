@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
 
     static async login({ credential, password }) {
       const { Op } = require('sequelize');
-      const user = await User.scope('loginUser').findOne({
+      const user = await User.findOne({
         where: {
           [Op.or]: {
             username: credential,
@@ -100,16 +100,16 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "User",
       defaultScope: {
         attributes: {
-          exclude: ["hashedPassword", "email", "createdAt", "updatedAt"]
+          exclude: ["email"]
         }
       },
       scopes: {
         currentUser: {
-          attributes: { exclude: ["hashedPassword", "createdAt", "updatedAt"] }
+          attributes: { exclude: ["hashedPassword"] }
         },
-        loginUser: {
-          attributes:  {exclude: [ "createdAt", "updatedAt"]}
-        },
+        // loginUser: {
+        //   attributes:  {exclude: [ "createdAt", "updatedAt"]}
+        // },
       }
     }
   );
