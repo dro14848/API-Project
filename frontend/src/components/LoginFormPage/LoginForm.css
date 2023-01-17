@@ -19,11 +19,3 @@ input {
     justify-content: right;
     align-items: right;
   }
-  
-  button {
-    height: 25px;
-    width: 40px;
-    background: rgb(60, 56, 56);
-    color: rgb(255, 255, 255);
-    font-size: .50em;
-  }
