@@ -1,6 +1,6 @@
 form {
     display: flex;
-    justify-content: left;
+    justify-content: center;
     flex-direction: column;
 }
 label {

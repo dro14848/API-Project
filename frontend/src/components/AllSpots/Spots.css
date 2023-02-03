@@ -1,0 +1,32 @@
+.images {
+    width: 270px;
+    height: 260px;
+    border-radius: 5%;
+    margin: 10px;
+    
+}
+
+.MainDiv {
+    outline: 2px solid #f01a1a;
+    outline-offset: 0px;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    display: flex;
+    /* flex-wrap:nowrap */
+}
+
+.spotId {
+    outline: 2px solid #1C6EA4;
+    outline-offset: 0px;
+    flex-direction: row;
+}
+
+.spotInfo {
+    font-weight: bold;
+    font-size: 10px;
+    position: relative;
+    outline: 2px solid #aee33b;
+
+}

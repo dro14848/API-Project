@@ -1,41 +1,55 @@
 import { csrfFetch} from './csrf'
 
 const LOAD_SPOTS = "spots/LOAD_SPOTS"
+const SINGLE_SPOT = 'spots/SINGLE_SPOT'
 
-const getAllspots = (spots) => ({
+const getSpots = (spots) => ({
     type: LOAD_SPOTS,
     spots
 })
 
+const singleSpot = (spots) => ({
+    type: SINGLE_SPOT,
+    spots
+})
 
 //thunk
 export const getAllSpotsThunk = () => async (dispatch) => {
     const response = await csrfFetch('api/spots');
+        const spots = await response.json();
+        dispatch(getSpots(spots))
+   
+}
 
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(getAllspots(data))
-        return data;
-    }
-
+export const singleSPotThunk = (spotId) => async (dispatch) => {
+    const response = await csrfFetch('api/:spotId');
+    const singleSpotfetch = await response.json();
+    dispatch(singleSpot(singleSpotfetch))
 }
 
 //initial state
-const initialState = {}
+const initialState = {
+    allSpots: {},
+    singleSpot: {}
+}
 
 //reducer 
 
 export default function spotReducer (state = initialState, action) {
+    let newState = {...state}
     switch (action.type){
         case LOAD_SPOTS: {
-            let newState = {...state};
+            newState = {allSpots:{}, singleSpot:{}};
             action.spots.Spots.forEach((spot) => {
-                newState.spots[spot.id] = spot
-            })
-            console.log(newState)
+                newState.allSpots[spot.id] = spot
+            });
             return newState
+        };
+        case SINGLE_SPOT: {
+
         }
+
         default: 
-        return state
+            return state;
     }
 }

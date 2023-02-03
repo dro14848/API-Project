@@ -1,3 +1,21 @@
 ul {
     display: block;
 }
+
+.MainNavDiv {
+    outline: 2px solid #0eea69;
+    outline-offset: 0px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.buttonTest {
+    outline: 2px solid #d899ce;
+    
+    
+}
+
+.Homebutton {
+    outline: 2px solid #460def;
+}
