@@ -2,15 +2,18 @@ import { csrfFetch} from './csrf'
 
 const LOAD_SPOTS = "spots/LOAD_SPOTS"
 const SINGLE_SPOT = 'spots/SINGLE_SPOT'
+const CREATE_SPOT = 'spots/CREATE_SPOT'
+const UPDATE_SPOT = 'spots/UPDATE_SPOT'
+const DELETE_SPOT = 'spots/DELETE_SPOT'
 
 const getSpots = (spots) => ({
     type: LOAD_SPOTS,
     spots
 })
 
-const singleSpot = (spots) => ({
+const singleSpot = (spot) => ({
     type: SINGLE_SPOT,
-    spots
+    spot
 })
 
 //thunk
@@ -21,10 +24,13 @@ export const getAllSpotsThunk = () => async (dispatch) => {
    
 }
 
-export const singleSPotThunk = (spotId) => async (dispatch) => {
-    const response = await csrfFetch('api/:spotId');
-    const singleSpotfetch = await response.json();
-    dispatch(singleSpot(singleSpotfetch))
+export const singleSpotThunk = (spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`);
+    console.log(spotId)
+    const singleSpotFetch = await response.json();
+    dispatch(singleSpot(singleSpotFetch))
+    return response
+
 }
 
 //initial state
@@ -46,7 +52,9 @@ export default function spotReducer (state = initialState, action) {
             return newState
         };
         case SINGLE_SPOT: {
-
+            newState = {};
+            newState.singleSpot = action.spot;
+            return newState;
         }
 
         default: 

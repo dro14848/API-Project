@@ -7,6 +7,7 @@ ul {
     outline-offset: 0px;
     display: flex;
     justify-content: space-between;
+    /* background-color: red */
 
 }
 
@@ -18,4 +19,9 @@ ul {
 
 .Homebutton {
     outline: 2px solid #460def;
+}
+
+.profile-dropdown {
+    /* border: 1px; */
+    outline: 1px solid #d56363;
 }
