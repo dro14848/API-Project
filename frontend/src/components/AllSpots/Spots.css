@@ -1,0 +1,37 @@
+.images {
+    width: 220px;
+    height: 250px;
+    border-radius: 5%;
+    margin: 10px;
+    
+}
+
+.MainSpotDiv {
+    /* outline: 2px solid #f01a1a; */
+    outline-offset: 0px;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    display: block;
+    flex-direction: column;
+    flex-wrap: wrap;
+    /* align-content: center;
+    align-items: center; */
+
+}
+
+.spotId {
+    /* outline: 2px solid #1C6EA4; */
+    outline-offset: 0px;
+    flex-direction: row;
+    display: inline-block;
+}
+
+.spotInfo {
+    font-weight: bold;
+    font-size: 10px;
+    position: relative;
+    /* outline: 2px solid #aee33b; */
+
+}

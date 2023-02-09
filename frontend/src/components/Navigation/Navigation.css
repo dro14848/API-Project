@@ -1,0 +1,46 @@
+ul {
+    display: block;
+}
+
+.MainNavDiv {
+    outline: 2px solid #0eea69;
+    outline-offset: 0px;
+    display: flex;
+    justify-content: space-between;
+    /* background-color: red */
+
+}
+
+.buttonTest {
+    outline: 2px solid #d899ce;
+    
+    
+}
+
+.Homebutton {
+    outline: 2px solid #460def;
+}
+
+.profile-dropdown {
+    background-color: white;
+     box-shadow: 2px 2px 15px 5px rgba(0,0,0,0.15);
+    border-radius: 10px;
+    position: fixed;
+    min-width: 180px;
+    min-height: 180px;
+    width: auto;
+    height: auto;
+    top: 49px;
+    right: 180px;
+    margin: 10px;
+    border: 30px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    z-index: 5500;
+}
+
+.hidden {
+    display: none;
+}
