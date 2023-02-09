@@ -26,7 +26,7 @@ export const getAllSpotsThunk = () => async (dispatch) => {
 
 export const singleSpotThunk = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`);
-    console.log(spotId)
+    // console.log(spotId)
     const singleSpotFetch = await response.json();
     dispatch(singleSpot(singleSpotFetch))
     return response
@@ -52,7 +52,7 @@ export default function spotReducer (state = initialState, action) {
             return newState
         };
         case SINGLE_SPOT: {
-            newState = {};
+            // newState = {};
             newState.singleSpot = action.spot;
             return newState;
         }

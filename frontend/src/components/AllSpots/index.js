@@ -1,4 +1,4 @@
-import { useEffect, useParams } from "react";
+import { useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSpotsThunk,singleSPotThunk } from "../../store/spot";
 import { NavLink,Switch, Route } from "react-router-dom";
@@ -8,11 +8,9 @@ import './Spots.css'
 
 function AllSpots() {
     const dispatch = useDispatch();
-    // const { spotId } = useParams();
-    // const singleSpot = useSelector((state) => state.Spots.singleSpot)
-    // console.log(singleSpot)
+   
     const allSpots = useSelector((state) => state.Spots.allSpots);
-    const allSpotsArr = Object.values(allSpots)
+    const allSpotsArr = Object.values(allSpots || []) 
     // console.log(allSpotsArr)
 
     useEffect(()=>{
