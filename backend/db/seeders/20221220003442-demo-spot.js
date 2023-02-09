@@ -49,9 +49,46 @@ module.exports = {
         description: 'Where you can hide from the world',
         price: 34,
 
+      },
+      {
+        ownerId: 4,
+        address: '123 seweqe',
+        city: 'Boca Raton',
+        state: 'Florida',
+        country: 'USA',
+        lat:  14.33242,
+        lng: 26.321523,
+        name: 'Bamboo House',
+        description: 'Tree House',
+        price: 340,
+
+      },
+      {
+        ownerId: 5,
+        address: '231 eqweqe',
+        city: 'Miramar',
+        state: 'Florida',
+        country: 'USA',
+        lat:  24.33242,
+        lng: 36.321523,
+        name: 'Sandy Beach Estate',
+        description: 'Gated Mansion',
+        price: 34,
+
+      },
+      {
+        ownerId: 6,
+        address: '44234 rwew',
+        city: 'Cape Coral',
+        state: 'Florida',
+        country: 'USA',
+        lat:  54.33242,
+        lng: 54.321523,
+        name: 'Cape Coral Mansion',
+        description: 'Mansion for large parties',
+        price: 34,
+
       }
-
-
     ], {})
   },
  
@@ -60,7 +97,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      ownerId: { [Op.in]: [1, 2, 3] }
+      ownerId: { [Op.in]: [1, 2, 3, 4, 5, 6] }
     }, {});
   }
 };
