@@ -16,6 +16,11 @@ const singleSpot = (spot) => ({
     spot
 })
 
+const createSpot = (spot) => ({
+    type: CREATE_SPOT,
+    spot
+})
+
 //thunk
 export const getAllSpotsThunk = () => async (dispatch) => {
     const response = await csrfFetch('api/spots');
@@ -31,6 +36,16 @@ export const singleSpotThunk = (spotId) => async (dispatch) => {
     dispatch(singleSpot(singleSpotFetch))
     return response
 
+}
+
+export const createSpotThunk = (spot, spotImg) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots`, {
+        //post
+    })
+    const imgRes = await csrfFetch(`/api/spots/${spot.id}/images`, {
+        //post
+    })
+    //combine both
 }
 
 //initial state
