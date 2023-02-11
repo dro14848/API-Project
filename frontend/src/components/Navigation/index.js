@@ -5,6 +5,7 @@ import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import CreateSpot from '../Spot-Create';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
@@ -37,10 +38,12 @@ function Navigation({ isLoaded }){
       <ul className='Homebutton'>
         <NavLink exact to="/">Home</NavLink>
       </ul>
+      {/* <CreateSpot/> */}
       <div className='buttonTest'>
       {isLoaded && (
         <ul>
           <ProfileButton user={sessionUser} />
+          <CreateSpot className='createSpotButton'/>
         </ul>
       )}
       </div>

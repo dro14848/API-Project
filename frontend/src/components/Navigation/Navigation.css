@@ -11,11 +11,9 @@ ul {
     height: 65px;
 }
 
-.buttonTest {
+.createSpotButton {
     outline: 2px solid #d899ce;
-    width: 10%;
-    
-    
+    width: 5%;
 }
 
 .Homebutton {

@@ -21,6 +21,16 @@ const createSpot = (spot) => ({
     spot
 })
 
+const updateSpot = (spot) => ({
+    type: UPDATE_SPOT,
+    spot
+})
+
+const deleteSpot = (spot)   => ({
+    type: DELETE_SPOT,
+    spot
+})
+
 //thunk
 export const getAllSpotsThunk = () => async (dispatch) => {
     const response = await csrfFetch('api/spots');
@@ -39,12 +49,17 @@ export const singleSpotThunk = (spotId) => async (dispatch) => {
 }
 
 export const createSpotThunk = (spot, spotImg) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots`, {
-        //post
-    })
+    const spotResponse = await csrfFetch(`/api/spots`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(spot)
+    });
+    console.log('spotResponse', spotResponse)
     const imgRes = await csrfFetch(`/api/spots/${spot.id}/images`, {
-        //post
-    })
+        method: 'POST',
+        header: {'Content-Type': 'application/json'},
+        // body:
+    });
     //combine both
 }
 
@@ -70,6 +85,16 @@ export default function spotReducer (state = initialState, action) {
             // newState = {};
             newState.singleSpot = action.spot;
             return newState;
+        };
+        case CREATE_SPOT: {
+            return newState
+        };
+        
+        case UPDATE_SPOT:{
+
+        }
+        case DELETE_SPOT: {
+            
         }
 
         default: 
