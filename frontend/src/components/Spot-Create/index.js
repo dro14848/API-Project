@@ -16,11 +16,28 @@ function CreateSpot() {
     const [name, setName] = useState("");
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState("")
+    const [previewimg, setPreviewImg] = useState('')
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
   
     const handleSubmit = (e) => {
       e.preventDefault();
+
+      setErrors([]);
+
+        const newSpot= {
+          address,
+          city,
+          state,
+          country,
+          lat,
+          lng,
+          name,
+          description,
+          price,
+          previewimg
+        }
+      return dispatch(createSpotThunk(newSpot), previewimg).then(()=> closeModal)
  
     };
   
@@ -83,8 +100,11 @@ function CreateSpot() {
             Price
             <input className="globalInput"
             type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
             />
           </label>
+          <button className="Create-Spot-button" type="submit">Create New Spot</button>
   
         </form>
       </>

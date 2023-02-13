@@ -43,7 +43,7 @@ function Navigation({ isLoaded }){
       {isLoaded && (
         <ul>
           <ProfileButton user={sessionUser} />
-          <CreateSpot className='createSpotButton'/>
+          {/* <CreateSpot className='createSpotButton'/> */}
         </ul>
       )}
       </div>
