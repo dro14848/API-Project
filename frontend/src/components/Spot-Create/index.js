@@ -35,9 +35,10 @@ function CreateSpot() {
           name,
           description,
           price,
-          previewimg
+          // previewimg
         }
-      return dispatch(createSpotThunk(newSpot), previewimg).then(()=> closeModal)
+      return dispatch(createSpotThunk(newSpot))
+      .then(()=> closeModal)
  
     };
   
