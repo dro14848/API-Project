@@ -27,7 +27,64 @@ function CreateSpot() {
     return (
       <>
       <button>Create a Spot</button>
-        <form onSubmit={handleSubmit}>
+        <form className="CreateSpotForm"onSubmit={handleSubmit}>
+          <ul>
+            {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          </ul>
+          <label>
+            Address
+            <input className="globalInput"
+            type="text"
+            value={address}
+            onChange= {(e) => setAddress(e.target.value)}
+            />
+          </label>
+          <label>
+            City
+            <input className="glovalInput"
+            type="text"
+            value={city}
+            onChange={(e)=> setCity(e.target.value)}
+            />
+          </label>
+          <label>
+            State
+            <input className="globalInput"
+            type="text"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+            />
+          </label>
+          <label>
+            Country
+            <input className="globalInput"
+            type="text"
+            value={country}
+            onChange={(e)=> setCountry(e.target.value)}
+            />
+          </label>
+          <label>
+            Name
+            <input className="globalInput"
+            type="text"
+            value={name}
+            onChange={(e)=> setName(e.target.value)} 
+            />
+          </label>
+          <label>
+            Description
+            <input className="gloabalInput"
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            />
+          </label>
+          <label>
+            Price
+            <input className="globalInput"
+            type="number"
+            />
+          </label>
   
         </form>
       </>
