@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {createSpotThunk} from '../../store/spot'
 import { useModal } from "../../context/Modal";
+import { useHistory } from "react-router-dom";
 
 
 function CreateSpot() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
@@ -16,7 +18,7 @@ function CreateSpot() {
     const [name, setName] = useState("");
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState("")
-    const [previewimg, setPreviewImg] = useState('')
+    const [SpotImages, setPreviewImg] = useState('')
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
   
@@ -30,15 +32,18 @@ function CreateSpot() {
           city,
           state,
           country,
-          lat,
-          lng,
+          lat: 123.23,
+          lng: 123.12,
           name,
           description,
           price,
-          // previewimg
+          SpotImages
         }
+
+        
+        console.log("COMPONANT", newSpot)
       return dispatch(createSpotThunk(newSpot))
-      .then(()=> closeModal)
+      .then(()=> closeModal);
  
     };
   
@@ -59,7 +64,7 @@ function CreateSpot() {
           </label>
           <label>
             City
-            <input className="glovalInput"
+            <input className="globalInput"
             type="text"
             value={city}
             onChange={(e)=> setCity(e.target.value)}
@@ -91,7 +96,7 @@ function CreateSpot() {
           </label>
           <label>
             Description
-            <input className="gloabalInput"
+            <input className="globalInput"
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -103,6 +108,14 @@ function CreateSpot() {
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            />
+          </label>
+          <label>
+            Preview Image 
+            <input className="globalInput"
+            type="text"
+            value={SpotImages}
+            onChange={(e) => setPreviewImg(e.target.value)}
             />
           </label>
           <button className="Create-Spot-button" type="submit">Create New Spot</button>

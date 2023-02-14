@@ -49,18 +49,29 @@ export const singleSpotThunk = (spotId) => async (dispatch) => {
 }
 
 export const createSpotThunk = (newSpot) => async (dispatch) => {
+    console.log("NEW SPOT", newSpot)
     const spotResponse = await csrfFetch(`/api/spots`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(newSpot)
     });
-    console.log('spotResponse', spotResponse)
-    // const imgRes = await csrfFetch(`/api/spots/${spot.id}/images`, {
-    //     method: 'POST',
-    //     header: {'Content-Type': 'application/json'},
-    //     // body:
-    // });
-    //combine both
+
+    if (spotResponse.ok) {
+    const createNewSpot = await spotResponse.json();
+    const imgRes = await csrfFetch(`/api/spots/${createNewSpot.id}/images`, {
+        method: 'POST',
+        body: JSON.stringify({
+            url: newSpot.SpotImages,
+            preview: true
+        })
+    })
+
+    if(imgRes.ok) {
+        const imgData = await imgRes.json();
+        const combineData = {previewImage: imgData.url, ...createNewSpot}
+        dispatch(createSpot(combineData))
+        return combineData
+    }
+    }
 }
 
 //initial state
@@ -87,6 +98,9 @@ export default function spotReducer (state = initialState, action) {
             return newState;
         };
         case CREATE_SPOT: {
+            let newStateCopy = {...newState.allSpots}
+            newStateCopy[action.spot.id] = action.spot
+            newState.allSpots = newStateCopy
             return newState
         };
         
