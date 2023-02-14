@@ -74,6 +74,16 @@ export const createSpotThunk = (newSpot) => async (dispatch) => {
     }
 }
 
+export const deleteSpotThunk = (spot) => async (dispatch) => {
+    const deleteRes = await csrfFetch(`/api/spots/${spot}`, {
+        method: "DELETE"
+    })
+
+    if(deleteRes.ok){
+        dispatch(deleteSpot(spot))
+    }
+}
+
 //initial state
 const initialState = {
     allSpots: {},
@@ -108,7 +118,7 @@ export default function spotReducer (state = initialState, action) {
 
         }
         case DELETE_SPOT: {
-            
+            return state;
         }
 
         default: 
