@@ -68,8 +68,8 @@ router.get('/', async(req, res) => {
     if(size){
         if (size <= 0 || isNaN(size)){
             errors.size = "Size must be greater than or equal to 1"
-        } else if (size > 20) size = 20
-    } else {size = 20}
+        } else if (size > 40) size = 40
+    } else {size = 40}
 
 
 
@@ -79,7 +79,7 @@ router.get('/', async(req, res) => {
         res.json({
             "message": "Validation Error",
             "statusCode": 400,
-            "errors": errprs
+            "errors": errors
         })
     }
 

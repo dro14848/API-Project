@@ -9,7 +9,7 @@ function SpotSingle() {
     const dispatch = useDispatch();
     const singleSpot = useSelector((state) => state.Spots.singleSpot)
     // const user = useSelector((state) => state.session.user)
-    console.log('SPOT IMg',singleSpot)
+    // console.log('SPOT IMg',singleSpot)
 
 
       useEffect(() => {
