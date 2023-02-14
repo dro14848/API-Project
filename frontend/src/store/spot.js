@@ -16,6 +16,21 @@ const singleSpot = (spot) => ({
     spot
 })
 
+const createSpot = (spot) => ({
+    type: CREATE_SPOT,
+    spot
+})
+
+const updateSpot = (spot) => ({
+    type: UPDATE_SPOT,
+    spot
+})
+
+const deleteSpot = (spot)   => ({
+    type: DELETE_SPOT,
+    spot
+})
+
 //thunk
 export const getAllSpotsThunk = () => async (dispatch) => {
     const response = await csrfFetch('api/spots');
@@ -31,6 +46,32 @@ export const singleSpotThunk = (spotId) => async (dispatch) => {
     dispatch(singleSpot(singleSpotFetch))
     return response
 
+}
+
+export const createSpotThunk = (newSpot) => async (dispatch) => {
+    console.log("NEW SPOT", newSpot)
+    const spotResponse = await csrfFetch(`/api/spots`, {
+        method: 'POST',
+        body: JSON.stringify(newSpot)
+    });
+
+    if (spotResponse.ok) {
+    const createNewSpot = await spotResponse.json();
+    const imgRes = await csrfFetch(`/api/spots/${createNewSpot.id}/images`, {
+        method: 'POST',
+        body: JSON.stringify({
+            url: newSpot.SpotImages,
+            preview: true
+        })
+    })
+
+    if(imgRes.ok) {
+        const imgData = await imgRes.json();
+        const combineData = {previewImage: imgData.url, ...createNewSpot}
+        dispatch(createSpot(combineData))
+        return combineData
+    }
+    }
 }
 
 //initial state
@@ -55,6 +96,19 @@ export default function spotReducer (state = initialState, action) {
             // newState = {};
             newState.singleSpot = action.spot;
             return newState;
+        };
+        case CREATE_SPOT: {
+            let newStateCopy = {...newState.allSpots}
+            newStateCopy[action.spot.id] = action.spot
+            newState.allSpots = newStateCopy
+            return newState
+        };
+        
+        case UPDATE_SPOT:{
+
+        }
+        case DELETE_SPOT: {
+            
         }
 
         default: 

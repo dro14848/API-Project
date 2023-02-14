@@ -1,5 +1,5 @@
 ul {
-    display: block;
+    /* display: block; */
 }
 
 .MainNavDiv {
@@ -7,31 +7,30 @@ ul {
     outline-offset: 0px;
     display: flex;
     justify-content: space-between;
-    /* background-color: red */
-
+    background-color: rgba(250, 250, 250, 0.751);
+    height: 65px;
 }
 
-.buttonTest {
+.createSpotButton {
     outline: 2px solid #d899ce;
-    
-    
+    width: 5%;
 }
 
 .Homebutton {
-    outline: 2px solid #460def;
+    /* outline: 2px solid #460def; */
 }
 
 .profile-dropdown {
-    background-color: white;
+    background-color: rgba(250, 250, 250, 0.751);
      box-shadow: 2px 2px 15px 5px rgba(0,0,0,0.15);
     border-radius: 10px;
     position: fixed;
-    min-width: 180px;
-    min-height: 180px;
+    min-width: 90px;
+    min-height: 60px;
     width: auto;
     height: auto;
     top: 49px;
-    right: 180px;
+    right: 10px;
     margin: 10px;
     border: 30px;
     padding: 10px;
