@@ -8,8 +8,8 @@ function EditSpot () {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const spot = useSelector((state) => state.Spots.singleSpot)
-    const userSession = useSelector((state) => state.session.user)
-    // console.log
+    // const userSession = useSelector((state) => state.session.user)
+
     const [address, setAddress] = useState(spot.address);
     const [city, setCity] = useState(spot.city);
     const [state, setState] = useState(spot.state);
@@ -20,27 +20,7 @@ function EditSpot () {
     const [errors, setErrors] = useState([]);
     
     console.log("SPOTCHECK", spot)
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-  
-    //     setErrors([]);
-  
-    //       const newSpot= {
-    //         address,
-    //         city,
-    //         state,
-    //         country,
-    //         name,
-    //         description,
-    //         price,
-    //       }
-  
-          
-    //       console.log("COMPONANT", newSpot)
-    //     return dispatch(updateSpotThunk(newSpot))
-    //     .then(()=> closeModal);
-   
-    //   };
+
 
     return (
       <div>
