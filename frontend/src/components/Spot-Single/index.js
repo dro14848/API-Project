@@ -1,7 +1,7 @@
 import { useEffect} from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { singleSpotThunk } from "../../store/spot";
+import { deleteSpotThunk, singleSpotThunk } from "../../store/spot";
 // import './Spots.css'
 
 function SpotSingle() {
@@ -23,11 +23,17 @@ function SpotSingle() {
         
         <div className="spotdetails">
             <h1 className="name">{singleSpot.name}</h1>
-            <button className="delete-button" 
-            
+            <button className="edit-button">
+                Edit Spot
+            </button>
+            <button className="delete-button"
+            onClick={async () => {
+                await dispatch(deleteSpotThunk(singleSpot.id))
+                .then(history.push('/'))
+            }}
             >
             Delete This Spot
-            </button>
+            </button> 
             <div className="ratingline">
             <p className="avgRatinginDetails">{singleSpot.avgStarRating}</p>
             <p className="address">{singleSpot.address}, {singleSpot.city}, {singleSpot.state}, {singleSpot.country}</p>
