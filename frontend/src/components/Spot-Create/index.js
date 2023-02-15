@@ -42,14 +42,20 @@ function CreateSpot() {
 
         
         console.log("COMPONANT", newSpot)
-      return dispatch(createSpotThunk(newSpot))
-      .then(()=> closeModal);
+      return dispatch(
+        createSpotThunk(newSpot))
+      .then((spot) =>{ 
+        closeModal()
+        history.push(`/spots/${spot.id}`)
+      })
+    
  
     };
   
     return (
       <>
-      <button>Create a Spot</button>
+      <div className="Create-Spot">
+        <button>
         <form className="CreateSpotForm"onSubmit={handleSubmit}>
           <ul>
             {errors.map((error, idx) => <li key={idx}>{error}</li>)}
@@ -121,6 +127,8 @@ function CreateSpot() {
           <button className="Create-Spot-button" type="submit">Create New Spot</button>
   
         </form>
+        </button>
+        </div>
       </>
     );
   }

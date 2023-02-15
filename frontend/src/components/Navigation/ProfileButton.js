@@ -48,15 +48,21 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
-            <li>
-              <CreateSpot/>
-            <li>
+            <div>{user.username}</div>
+            <div>{user.firstName} {user.lastName}</div>
+            <div>{user.email}</div>
+            <div>
+              <button>
+            <OpenModalMenuItem
+              itemText="Create a Spot"
+              onItemClick={closeMenu}
+              modalComponent={<CreateSpot />}
+            />
+            </button>
+            <div>
               <button onClick={logout}>Log Out</button>
-              </li>
-            </li>
+              </div>
+            </div>
           </>
         ) : (
           <>

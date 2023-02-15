@@ -2,15 +2,19 @@ import { useEffect} from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteSpotThunk, singleSpotThunk } from "../../store/spot";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem"
+import { useModal } from "../../context/Modal";
+import  EditSpot from '../Spot-Edit'
+
 // import './Spots.css'
 
 function SpotSingle() {
     const { id } = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
+    const {closeModal} = useModal();
     const singleSpot = useSelector((state) => state.Spots.singleSpot)
-    // const user = useSelector((state) => state.session.user)
-    // console.log('SPOT IMg',singleSpot)
+
 
 
       useEffect(() => {
@@ -23,9 +27,14 @@ function SpotSingle() {
         
         <div className="spotdetails">
             <h1 className="name">{singleSpot.name}</h1>
-            <button className="edit-button">
-                Edit Spot
-            </button>
+           <div className="Edit-button">
+             <OpenModalMenuItem
+            className='Edit-Button'
+            itemText={"Edit Spot"}
+            modalComponent={EditSpot}
+            />
+    
+           </div>
             <button className="delete-button"
             onClick={async () => {
                 await dispatch(deleteSpotThunk(singleSpot.id))
