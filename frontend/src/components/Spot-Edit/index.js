@@ -1,62 +1,51 @@
-import { useEffect, useState} from "react";
-import { useParams } from "react-router-dom";
+
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {createSpotThunk} from '../../store/spot'
 import { useModal } from "../../context/Modal";
-import { useHistory } from "react-router-dom";
+import { updateSpotThunk } from "../../store/spot";
 
-
-function CreateSpot() {
+function EditSpot () {
     const dispatch = useDispatch();
-    const history = useHistory();
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [country, setCountry] = useState("");
-    const [lat, setLat] = useState("");
-    const [lng, setLng] = useState("");
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState('');
-    const [price, setPrice] = useState("")
-    const [SpotImages, setPreviewImg] = useState('')
-    const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
-  
+
+
+    const spot = useSelector((state) => state.Spots.singleSpot)
+    const userSession = useSelector((state) => state.session.user)
+    // console.log( "SPOT LOG",spot)
+    const [address, setAddress] = useState(spot.address);
+    const [city, setCity] = useState(spot.city);
+    const [state, setState] = useState(spot.state);
+    const [country, setCountry] = useState(spot.country);
+    const [name, setName] = useState(spot.name);
+    const [description, setDescription] = useState(spot.description);
+    const [price, setPrice] = useState(spot.price)
+    const [errors, setErrors] = useState([]);
+
+
     const handleSubmit = (e) => {
-      e.preventDefault();
+        e.preventDefault()
 
-      setErrors([]);
+      const newSpot = {
+        address,
+        city,
+        state,
+        country,
+        lat: 12.34,
+        lng: 12.34,
+        name,
+        description,
+        price
+      }
 
-        const newSpot= {
-          address,
-          city,
-          state,
-          country,
-          lat: 123.23,
-          lng: 123.12,
-          name,
-          description,
-          price,
-          SpotImages
-        }
+      console.log("THUNK", updateSpotThunk)
+      console.log("NEWSPOT", newSpot)
 
-        
-        console.log("COMPONANT", newSpot)
-      return dispatch(
-        createSpotThunk(newSpot))
-      .then((spot) =>{ 
-        closeModal()
-        history.push(`/spots/${spot.id}`)
-      })
-    
- 
-    };
-  
+        return dispatch(updateSpotThunk(spot,newSpot)).then(() => closeModal)
+    }
+
     return (
-      <>
-      <div className="Create-Spot">
-        <button>
-        <form className="CreateSpotForm"onSubmit={handleSubmit}>
+        <div>
+             <form className="CreateSpotForm" onSubmit={handleSubmit}>
           <ul>
             {errors.map((error, idx) => <li key={idx}>{error}</li>)}
           </ul>
@@ -116,21 +105,12 @@ function CreateSpot() {
             onChange={(e) => setPrice(e.target.value)}
             />
           </label>
-          <label>
-            Preview Image 
-            <input className="globalInput"
-            type="text"
-            value={SpotImages}
-            onChange={(e) => setPreviewImg(e.target.value)}
-            />
-          </label>
-          <button className="Create-Spot-button" type="submit">Create New Spot</button>
+         
+          <button className="Create-Spot-button" type="submit">Confirm Edit</button>
   
         </form>
-        </button>
         </div>
-      </>
-    );
-  }
+    )
+}    
 
-export default CreateSpot;
+export default EditSpot
