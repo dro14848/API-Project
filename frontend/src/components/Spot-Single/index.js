@@ -29,8 +29,8 @@ function SpotSingle() {
             <h1 className="name">{singleSpot.name}</h1>
            <div className="Edit-button">
            <OpenModalButton 
-        modalComponent={EditSpot}
-        buttonText={"BUTTON TEST "}
+        modalComponent={<EditSpot />}
+        buttonText={"Edit This Spot"}
             />
     
            </div>
@@ -42,7 +42,6 @@ function SpotSingle() {
             >
             Delete This Spot
             </button> 
-            <EditSpot />
             <div className="ratingline">
             <p className="avgRatinginDetails">{singleSpot.avgStarRating}</p>
             <p className="address">{singleSpot.address}, {singleSpot.city}, {singleSpot.state}, {singleSpot.country}</p>
