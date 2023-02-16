@@ -37,8 +37,8 @@ function EditSpot () {
         price
       }
 
-      console.log("THUNK", updateSpotThunk)
-      console.log("NEWSPOT", newSpot)
+      // console.log("THUNK", updateSpotThunk)
+      // console.log("NEWSPOT", newSpot)
 
         return dispatch(updateSpotThunk(spot,newSpot)).then(() => closeModal)
     }

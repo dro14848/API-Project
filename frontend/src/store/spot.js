@@ -92,7 +92,7 @@ export const updateSpotThunk = (currSpot, editedSPot) => async (dispatch) => {
 
     if(editResponse.ok){
         const data = await editResponse.json();
-        console.log(" DATA RES", data)
+        // console.log(" DATA RES", data)
         dispatch(updateSpot(data))
         return data
     }
