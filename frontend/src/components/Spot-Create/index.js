@@ -1,5 +1,4 @@
 import { useEffect, useState} from "react";
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {createSpotThunk} from '../../store/spot'
 import { useModal } from "../../context/Modal";
