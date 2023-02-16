@@ -5,8 +5,8 @@ import { deleteSpotThunk, singleSpotThunk } from "../../store/spot";
 import OpenModalButton from "../OpenModalButton";
 import { useModal } from "../../context/Modal";
 import  EditSpot from '../Spot-Edit'
-
-// import './Spots.css'
+import GetSpotReviews from "../Review-read";
+import './Spot.css'
 
 function SpotSingle() {
     const { id } = useParams();
@@ -42,14 +42,17 @@ function SpotSingle() {
             >
             Delete This Spot
             </button> 
-            <div className="ratingline">
-            <p className="avgRatinginDetails">{singleSpot.avgStarRating}</p>
-            <p className="address">{singleSpot.address}, {singleSpot.city}, {singleSpot.state}, {singleSpot.country}</p>
                 <div className="spot-images">
                     {singleSpot?.SpotImages?.map(img => {
                         return <img id="spotimages" src={img.url} alt={singleSpot.name}/>
 
                     })}
+            <div className="ratingline">
+                <div>
+                    <GetSpotReviews />
+                </div>
+            <p className="avgRatinginDetails">Average Rating: {singleSpot.avgStarRating}</p>
+            <p className="address">Address: {singleSpot.address}, {singleSpot.city}, {singleSpot.state}, {singleSpot.country}</p>
                 </div>
             </div>
         </div>

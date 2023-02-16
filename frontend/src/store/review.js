@@ -1,7 +1,8 @@
 import { csrfFetch } from "./csrf";
 
 const CREATE_REVIEW = "reviews/create"
-const READ_REVIEW   = "reviews/read"
+const READ__SPOT_REVIEW   = "reviews/spot"
+const READ_USER_REVIEW = "reviews/user"
 const UPDATE_REVIEW = 'reviews/update'
 
 
@@ -10,9 +11,14 @@ const createReview = (review) => ({
     review
 })
 
-const readReview = (reviews) => ({
-    type: READ_REVIEW,
+const readSpotReview = (reviews) => ({
+    type: READ__SPOT_REVIEW,
     reviews
+})
+
+const readUserReview = (userReview) => ({
+    type: READ_USER_REVIEW,
+    userReview
 })
 
 const updateReview = (review) => ({
@@ -23,12 +29,18 @@ const updateReview = (review) => ({
 
 
 //thunk 
-
+export const getAllReviewThunk = (spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
+        const reviews = await response.json()
+        // console.log("THUNK",reviews)
+        dispatch(readSpotReview(reviews))
+}
 
 
 //initial state
 const initialState = {
-    reviews: {}
+    spot: {},
+    user: {}
 }
 
 export default function reviewReducer (state = initialState, action){
@@ -38,7 +50,15 @@ export default function reviewReducer (state = initialState, action){
 
         }
 
-        case READ_REVIEW: {
+        case READ__SPOT_REVIEW: {
+            newState = { spot:{}, user: {}};
+            console.log("ACTION", action)
+            action.reviews.Reviews.forEach( review => {
+                newState.spot[review.id] = review
+            });
+            return newState
+        }
+        case READ_USER_REVIEW: {
 
         }
 
