@@ -26,7 +26,7 @@ function App() {
           <Route exact path='/spots/:id'>
             <SpotSingle />
           </Route>
-          <Route exact path = '/spots/:id/test'>
+          <Route exact path = '/spots/:id/edit'>
             <EditSpot />
           </Route>
         </Switch>
