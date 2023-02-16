@@ -11,7 +11,7 @@ function EditSpot () {
 
     const spot = useSelector((state) => state.Spots.singleSpot)
     const userSession = useSelector((state) => state.session.user)
-    console.log( "SPOT LOG",spot)
+    // console.log( "SPOT LOG",spot)
     const [address, setAddress] = useState(spot.address);
     const [city, setCity] = useState(spot.city);
     const [state, setState] = useState(spot.state);
@@ -24,11 +24,28 @@ function EditSpot () {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
+      const newSpot = {
+        address,
+        city,
+        state,
+        country,
+        lat: 12.34,
+        lng: 12.34,
+        name,
+        description,
+        price
+      }
+
+      console.log("THUNK", updateSpotThunk)
+      console.log("NEWSPOT", newSpot)
+
+        return dispatch(updateSpotThunk(spot,newSpot)).then(() => closeModal)
     }
 
     return (
         <div>
-             <form className="CreateSpotForm">
+             <form className="CreateSpotForm" onSubmit={handleSubmit}>
           <ul>
             {errors.map((error, idx) => <li key={idx}>{error}</li>)}
           </ul>
@@ -89,7 +106,7 @@ function EditSpot () {
             />
           </label>
          
-          <button className="Create-Spot-button" type="submit">Create New Spot</button>
+          <button className="Create-Spot-button" type="submit">Confirm Edit</button>
   
         </form>
         </div>
