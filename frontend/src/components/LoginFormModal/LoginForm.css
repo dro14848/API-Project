@@ -1,0 +1,16 @@
+.MainLoginDiv {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.LogInText {
+    /* display: flex;
+    flex-direction: row; */
+    outline: 2px rgb(225, 25, 25);
+}
+
+.h2 {
+    display: flex;
+    outline: 2px rgb(225, 25, 25);
+}

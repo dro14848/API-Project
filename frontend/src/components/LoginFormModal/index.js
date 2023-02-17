@@ -26,7 +26,8 @@ function LoginFormModal() {
 
   return (
     <>
-      <h1>Log In</h1>
+    <div className="MainLoginDiv">
+      <h2 className="LogInText">Log In</h2>
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
@@ -54,6 +55,7 @@ function LoginFormModal() {
         <button type="submit">Log In</button>
       </form>
       <button className="Demo-user" type="submit" onClick={() => dispatch(sessionActions.login({credential:"FakeUser1", password:"password2"})).then(closeModal)} > Demo User</button>
+      </div>
     </>
   );
 }
