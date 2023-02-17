@@ -12,18 +12,20 @@ function GetSpotReviews() {
     const dispatch = useDispatch();
     const { id } = useParams();
     const spot = useSelector((state) => state.Spots.singleSpot)
-    const reviews = useSelector((state) => state.Reviews.spot)
-    const reviewsArr = Object.values(reviews)
+    const reviewsObj = useSelector((state) => state.Reviews.spot)
+    const reviewsArr = Object.values(reviewsObj)
 
     useEffect(() => {
         dispatch(getAllReviewThunk(id))
-        // console.log("DISPATH ID", id)
+        console.log("DISPATH ID", id)
     }, [dispatch, id])
 
     // console.log("SPOT ID", id)
-    // console.log("SPOT", spot);
+    console.log("SPOT", spot);
     // console.log("REVIEWS ARR", reviewsArr)
+    console.log("REVIEWS", reviewsObj)
 
+    if (!reviewsObj) return <h1>No reviewsObj</h1>
 
     return (
         <div className="MainReviewDiv">
@@ -33,10 +35,11 @@ function GetSpotReviews() {
                         <p>Reviews: {review}</p>
                         <p>Stars: {stars}</p>
                         <button className="DeleteReviewButton"
-                        onclick={async () => {
-                            await dispatch(deleteReviewThunk(review.id))
-                            .then(() => dispatch(singleSpotThunk(spot.id)))
-                            .then(() => dispatch(getAllReviewThunk(id)))
+                        onClick={async () => {
+                            console.log("REVIEWS THUNK",id)
+                            await dispatch(deleteReviewThunk(id))
+                            // .then(() => dispatch(singleSpotThunk(spot.id)))
+                            .then(() => dispatch(getAllReviewThunk(spot.id)))
                         }}
                         >
                             DELETE REVIEW

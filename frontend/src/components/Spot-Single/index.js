@@ -7,6 +7,7 @@ import { useModal } from "../../context/Modal";
 import  EditSpot from '../Spot-Edit'
 import GetSpotReviews from "../Review-read";
 import CreateReview from "../Create-Review";
+import { deleteReviewThunk } from "../../store/review";
 import './Spot.css'
 
 function SpotSingle() {
@@ -15,6 +16,8 @@ function SpotSingle() {
     const history = useHistory();
     const {closeModal} = useModal();
     const singleSpot = useSelector((state) => state.Spots.singleSpot)
+    const reviews = useSelector((state) => state.Reviews.spot)
+    const reviewsArr = Object.values(reviews)
 
 
 
@@ -51,6 +54,7 @@ function SpotSingle() {
             <div className="ratingline">
                 <div>
                     <GetSpotReviews />
+                   
                 </div>
                 <div>
                     <OpenModalButton
