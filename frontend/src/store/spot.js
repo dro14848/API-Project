@@ -130,7 +130,7 @@ export default function spotReducer (state = initialState, action) {
         
         case UPDATE_SPOT:{
             let spotCopy = {...state.singleSpot, ...action.spot}
-            console.log(spotCopy)
+            // console.log(spotCopy)
             return {...state, singleSpot: spotCopy}
            
         }

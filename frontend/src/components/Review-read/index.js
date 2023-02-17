@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch} from "react-redux";
-import { getAllReviewThunk } from "../../store/review";
+import { deleteReviewThunk, getAllReviewThunk } from "../../store/review";
 import { useParams } from "react-router-dom";
+import { singleSpotThunk } from "../../store/spot";
 import './Review.css'
 
 
@@ -21,7 +22,7 @@ function GetSpotReviews() {
 
     // console.log("SPOT ID", id)
     // console.log("SPOT", spot);
-    console.log("REVIEWS ARR", reviewsArr)
+    // console.log("REVIEWS ARR", reviewsArr)
 
 
     return (
@@ -31,6 +32,15 @@ function GetSpotReviews() {
                     <div key={id} className="reviewId">
                         <p>Reviews: {review}</p>
                         <p>Stars: {stars}</p>
+                        <button className="DeleteReviewButton"
+                        onclick={async () => {
+                            await dispatch(deleteReviewThunk(review.id))
+                            .then(() => dispatch(singleSpotThunk(spot.id)))
+                            .then(() => dispatch(getAllReviewThunk(id)))
+                        }}
+                        >
+                            DELETE REVIEW
+                        </button>
                     </div>
                 )
             })}

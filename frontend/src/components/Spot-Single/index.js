@@ -6,6 +6,7 @@ import OpenModalButton from "../OpenModalButton";
 import { useModal } from "../../context/Modal";
 import  EditSpot from '../Spot-Edit'
 import GetSpotReviews from "../Review-read";
+import CreateReview from "../Create-Review";
 import './Spot.css'
 
 function SpotSingle() {
@@ -50,6 +51,12 @@ function SpotSingle() {
             <div className="ratingline">
                 <div>
                     <GetSpotReviews />
+                </div>
+                <div>
+                    <OpenModalButton
+                    modalComponent={<CreateReview/>}
+                    buttonText={"ADD NEW REVIEW"}
+                    />
                 </div>
             <p className="avgRatinginDetails">Average Rating: {singleSpot.avgStarRating}</p>
             <p className="address">Address: {singleSpot.address}, {singleSpot.city}, {singleSpot.state}, {singleSpot.country}</p>
