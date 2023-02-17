@@ -74,6 +74,30 @@ export const createSpotThunk = (newSpot) => async (dispatch) => {
     }
 }
 
+export const deleteSpotThunk = (spot) => async (dispatch) => {
+    const deleteRes = await csrfFetch(`/api/spots/${spot}`, {
+        method: "DELETE"
+    })
+
+    if(deleteRes.ok){
+        dispatch(deleteSpot(spot))
+    }
+}
+
+export const updateSpotThunk = (currSpot, editedSPot) => async (dispatch) => {
+    const editResponse = await csrfFetch(`/api/spots/${currSpot.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(editedSPot)
+    })
+
+    if(editResponse.ok){
+        const data = await editResponse.json();
+        // console.log(" DATA RES", data)
+        dispatch(updateSpot(data))
+        return data
+    }
+    // console.log("EDIT RESPONSE", editResponse)
+}
 //initial state
 const initialState = {
     allSpots: {},
@@ -105,10 +129,15 @@ export default function spotReducer (state = initialState, action) {
         };
         
         case UPDATE_SPOT:{
-
+            let spotCopy = {...state.singleSpot, ...action.spot}
+            // console.log(spotCopy)
+            return {...state, singleSpot: spotCopy}
+           
         }
         case DELETE_SPOT: {
-            
+            newState.allSpots = {...state.allSpots}
+            delete newState.allSpots[action.spotId]
+            return newState
         }
 
         default: 
