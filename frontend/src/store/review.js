@@ -45,7 +45,7 @@ export const createReviewThunk = (newReview, id) => async (dispatch) => {
     })
     if(reviewRes.ok) {
         const review = await reviewRes.json();
-        console.log("THUNK",review)
+        // console.log("THUNK",review)
         dispatch(createReview(review))
         return review
     }
@@ -57,7 +57,7 @@ export const deleteReviewThunk = (id) => async (dispatch) => {
 
     if (res.ok){
         const data = await res.json()
-        console.log("THUNK DELETE", data)
+        // console.log("THUNK DELETE", data)
         dispatch(deleteReviews(data))
         return data
     }
@@ -95,7 +95,7 @@ export default function reviewReducer (state = initialState, action){
 
         case DELETE_REVIEW: {
             newState.spot = { ...state.spot}
-            console.log("ACTION", action)
+            // console.log("ACTION", action)
             delete newState.spot[action.review.id]
             return newState
         }

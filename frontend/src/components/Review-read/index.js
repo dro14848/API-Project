@@ -17,13 +17,13 @@ function GetSpotReviews() {
 
     useEffect(() => {
         dispatch(getAllReviewThunk(id))
-        console.log("DISPATH ID", id)
+        // console.log("DISPATH ID", id)
     }, [dispatch, id])
 
     // console.log("SPOT ID", id)
-    console.log("SPOT", spot);
+    // console.log("SPOT", spot);
     // console.log("REVIEWS ARR", reviewsArr)
-    console.log("REVIEWS", reviewsObj)
+    // console.log("REVIEWS", reviewsObj)
 
     if (!reviewsObj) return <h1>No reviewsObj</h1>
 
@@ -36,7 +36,7 @@ function GetSpotReviews() {
                         <p>Stars: {stars}</p>
                         <button className="DeleteReviewButton"
                         onClick={async () => {
-                            console.log("REVIEWS THUNK",id)
+                            // console.log("REVIEWS THUNK",id)
                             await dispatch(deleteReviewThunk(id))
                             // .then(() => dispatch(singleSpotThunk(spot.id)))
                             .then(() => dispatch(getAllReviewThunk(spot.id)))
