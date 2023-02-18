@@ -62,7 +62,7 @@ function SpotSingle() {
                     buttonText={"ADD NEW REVIEW"}
                     />
                 </div>
-            <p className="avgRatinginDetails">Average Rating: {singleSpot.avgStarRating}</p>
+            <p className="single-review-rating">Average Rating: {singleSpot.avgStarRating}</p>
             <p className="address">Address: {singleSpot.address}, {singleSpot.city}, {singleSpot.state}, {singleSpot.country}</p>
                 </div>
             </div>

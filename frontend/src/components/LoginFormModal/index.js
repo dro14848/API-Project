@@ -35,7 +35,7 @@ function LoginFormModal() {
           ))}
         </ul>
         <label>
-          Username or Email
+          Username or Email:
           <input
             type="text"
             value={credential}
@@ -44,7 +44,7 @@ function LoginFormModal() {
           />
         </label>
         <label>
-          Password
+          Password:
           <input
             type="password"
             value={password}

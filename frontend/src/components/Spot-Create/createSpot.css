@@ -1,0 +1,23 @@
+.Form-Title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    font-size: 19px;
+}
+
+.Create-Spot{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: solid 0.75px rgba(0,0,0,0.1);
+    padding: 11px;
+background-color: aquamarine;
+}
+
+
+.CreateSpotForm {
+    display:flex;
+    flex-direction: column;
+
+}

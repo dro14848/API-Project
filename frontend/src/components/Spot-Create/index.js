@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {createSpotThunk} from '../../store/spot'
 import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
+import './createSpot.css'
 
 
 function CreateSpot() {
@@ -46,6 +47,12 @@ function CreateSpot() {
       .then((spot) =>{ 
         closeModal()
         history.push(`/spots/${spot.id}`)
+        .catch(
+          async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(data.errors);
+          }
+        );
       })
     
  
@@ -53,8 +60,8 @@ function CreateSpot() {
   
     return (
       <>
+        <div className="Form-Title">Create a New Spot</div>
       <div className="Create-Spot">
-        <button>
         <form className="CreateSpotForm"onSubmit={handleSubmit}>
           <ul>
             {errors.map((error, idx) => <li key={idx}>{error}</li>)}
@@ -65,6 +72,7 @@ function CreateSpot() {
             type="text"
             value={address}
             onChange= {(e) => setAddress(e.target.value)}
+            required
             />
           </label>
           <label>
@@ -73,6 +81,7 @@ function CreateSpot() {
             type="text"
             value={city}
             onChange={(e)=> setCity(e.target.value)}
+            required
             />
           </label>
           <label>
@@ -81,6 +90,7 @@ function CreateSpot() {
             type="text"
             value={state}
             onChange={(e) => setState(e.target.value)}
+            required
             />
           </label>
           <label>
@@ -89,6 +99,7 @@ function CreateSpot() {
             type="text"
             value={country}
             onChange={(e)=> setCountry(e.target.value)}
+            required
             />
           </label>
           <label>
@@ -96,7 +107,8 @@ function CreateSpot() {
             <input className="globalInput"
             type="text"
             value={name}
-            onChange={(e)=> setName(e.target.value)} 
+            onChange={(e)=> setName(e.target.value)}
+            required
             />
           </label>
           <label>
@@ -105,6 +117,7 @@ function CreateSpot() {
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            required
             />
           </label>
           <label>
@@ -113,6 +126,7 @@ function CreateSpot() {
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            required
             />
           </label>
           <label>
@@ -121,12 +135,12 @@ function CreateSpot() {
             type="text"
             value={SpotImages}
             onChange={(e) => setPreviewImg(e.target.value)}
+            required
             />
           </label>
           <button className="Create-Spot-button" type="submit">Create New Spot</button>
   
         </form>
-        </button>
         </div>
       </>
     );

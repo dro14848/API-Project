@@ -32,8 +32,8 @@ function GetSpotReviews() {
             {reviewsArr.map(({id, review, stars}) => {
                 return (
                     <div key={id} className="reviewId">
-                        <p>Reviews: {review}</p>
-                        <p>Stars: {stars}</p>
+                        <p>{review}</p>
+                        <p className="review-rating">{stars}</p>
                         <button className="DeleteReviewButton"
                         onClick={async () => {
                             // console.log("REVIEWS THUNK",id)
