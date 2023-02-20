@@ -24,7 +24,7 @@ function SpotSingle() {
     // console.log('SPOT INFO',[singleSpot.Owner])
 
     const ownerInfo = singleSpot.Owner
-    const userReview = reviewsArr.find(review => review.userId === userSession.id);
+    const userReview = reviewsArr.find(review => review.userId === userSession?.id);
 
  
 
