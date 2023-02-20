@@ -66,8 +66,7 @@ export const deleteReviewThunk = (id) => async (dispatch) => {
 
 //initial state
 const initialState = {
-    spot: {},
-    user: {}
+    spot: {}
 }
 
 export default function reviewReducer (state = initialState, action){
@@ -75,14 +74,14 @@ export default function reviewReducer (state = initialState, action){
     switch (action.type){
         case CREATE_REVIEW: {
             let newStateCopy = { ...newState.spot}
-            console.log("ACTION", action.review.spotId)
+            // console.log("ACTION", action.review.spotId)
             newStateCopy[action.review.id] = action.review
             newState.spot = newStateCopy
             return newState
         }
 
         case READ__SPOT_REVIEW: {
-            newState = { spot:{}, user: {}};
+            newState = { spot:{}};
             // console.log("ACTION", action)
             action.reviews.Reviews.forEach( review => {
                 newState.spot[review.id] = review

@@ -37,7 +37,7 @@ function SignupFormModal() {
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
         <label>
-          Email
+          Email:
           <input className="globalInput"
             type="text"
             value={email}
@@ -46,7 +46,7 @@ function SignupFormModal() {
           />
         </label>
         <label>
-          Username
+          Username:
           <input className="globalInput"
             type="text"
             value={username}
@@ -55,7 +55,7 @@ function SignupFormModal() {
           />
         </label>
         <label>
-          First Name
+          First Name:
           <input className="globalInput"
             type="text"
             value={firstName}
@@ -64,7 +64,7 @@ function SignupFormModal() {
           />
         </label>
         <label>
-          Last Name
+          Last Name:
           <input className="globalInput"
             type="text"
             value={lastName}
@@ -73,7 +73,7 @@ function SignupFormModal() {
           />
         </label>
         <label>
-          Password
+          Password:
           <input className="globalInput"
             type="password"
             value={password}
@@ -82,7 +82,7 @@ function SignupFormModal() {
           />
         </label>
         <label>
-          Confirm Password
+          Confirm Password:
           <input className="globalInput"
             type="password"
             value={confirmPassword}

@@ -7,6 +7,7 @@ import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import CreateSpot from '../Spot-Create';
 import './Navigation.css';
+import logo from "./logo.png"
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
@@ -36,7 +37,8 @@ function Navigation({ isLoaded }){
   return (
     <div className='MainNavDiv'>
       <ul className='Homebutton'>
-        <NavLink exact to="/">Home</NavLink>
+        <NavLink exact to="/" > <img className='logoimg' src={logo} />
+        </NavLink>
       </ul>
       {/* <CreateSpot/> */}
       <div className='buttonTest'>

@@ -6,6 +6,7 @@ import { singleSpotThunk } from "../../store/spot";
 import './Review.css'
 
 
+
 function GetSpotReviews() {
     //need spot ID
     //need single spot state
@@ -13,6 +14,7 @@ function GetSpotReviews() {
     const { id } = useParams();
     const spot = useSelector((state) => state.Spots.singleSpot)
     const reviewsObj = useSelector((state) => state.Reviews.spot)
+    const userSession = useSelector((state) => state.session.user)
     const reviewsArr = Object.values(reviewsObj)
 
     useEffect(() => {
@@ -20,6 +22,9 @@ function GetSpotReviews() {
         // console.log("DISPATH ID", id)
     }, [dispatch, id])
 
+    // const handleDelete = {
+    //     await dispatch(deleteReviewThunk)
+    // }
     // console.log("SPOT ID", id)
     // console.log("SPOT", spot);
     // console.log("REVIEWS ARR", reviewsArr)
@@ -29,21 +34,22 @@ function GetSpotReviews() {
 
     return (
         <div className="MainReviewDiv">
-            {reviewsArr.map(({id, review, stars}) => {
+            {reviewsArr.map(({id, review, stars, userId}) => {
                 return (
                     <div key={id} className="reviewId">
-                        <p>Reviews: {review}</p>
-                        <p>Stars: {stars}</p>
+                        <p>Review: {review}</p>
+                        <p className="review-rating">Stars: {stars}</p>
+                        {userSession?.id === userId ? 
                         <button className="DeleteReviewButton"
                         onClick={async () => {
-                            // console.log("REVIEWS THUNK",id)
+                            console.log("REVIEWS THUNK",userId)
                             await dispatch(deleteReviewThunk(id))
                             // .then(() => dispatch(singleSpotThunk(spot.id)))
                             .then(() => dispatch(getAllReviewThunk(spot.id)))
                         }}
                         >
                             DELETE REVIEW
-                        </button>
+                        </button>: null}
                     </div>
                 )
             })}

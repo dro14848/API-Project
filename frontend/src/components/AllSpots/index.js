@@ -36,7 +36,7 @@ function AllSpots() {
                     <img src={previewImage} alt={name} className='images' />
                     <div className="spotInfo">
                         <p> {city}, {state}</p>
-                        <p>{rating.toFixed(2)}</p>
+                        <p className="review-rating">{rating.toFixed(2)}</p>
                         <p> ${price} night</p>
                     </div>
                     </NavLink>
