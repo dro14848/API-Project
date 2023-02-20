@@ -20,7 +20,7 @@ module.exports = {
         lat:  -47.76358,
         lng: -12.4727,
         name: 'New AP',
-        description: 'You are invited to be our guest at the "Luxurious Private Vineyard Estate in Temecula Valley”. Come and enjoy one of the largest most accommodating properties in Temecula Valley, Situated on 5 acres, this 8 bedroom 6.5 bath vineyard estate can accommodate your group with ease. Bordered with a picturesque 1 acre vineyard and half acre 75+ treed orchard this operating winery provides privacy and peace during your stay.',
+        description: 'You are invited to be our guest at the "Luxurious Private Vineyard Estate in Temecula Valley”.',
         price: 1350,
 
       },
@@ -33,7 +33,7 @@ module.exports = {
         lat:  13.41234123,
         lng: -11.134443,
         name: 'House Leandro',
-        description: 'This property was professionally designed inside and out to create the ultimate experience for our guests. The entertaining backyard provides a brick oven pizza, outdoor kitchen, pool, spa, basketball court, tennis court, and recently added outdoor games including custom 9 hole mini golf course, bocce ball, horse shoes, and shuffleboard. The interior provides an equal amount of entertainment and luxury with a billiard and arcade room, 3 fireplaces, and a top of the line custom made bar.',
+        description: 'This property was professionally designed inside and out to create the ultimate experience for our guests.',
         price: 46,
 
       },
@@ -46,7 +46,7 @@ module.exports = {
         lat:  13.33242,
         lng: 28.321523,
         name: 'The other house',
-        description: 'Palm trees rustle and waves gently lap just steps from your doorstep at this tropical manor. A trail of tiles leads through the manicured yard to the sugary shore. Take a plunge in the capacious pool or try snorkelling in the crystal-clear Caribbean Sea. Dinner can be savoured al fresco on the terrace as the sunset ignites the horizon. Why not try kayaking, paddleboarding, or a local excursion?',
+        description: 'Palm trees rustle and waves gently lap just steps from your doorstep at this tropical manor.',
         price: 34,
 
       },
@@ -59,7 +59,7 @@ module.exports = {
         lat:  14.33242,
         lng: 26.321523,
         name: 'Bamboo House',
-        description: 'LOCATION - Location location location. My Studio is located in the Upper East neighborhood directly across from Ironside ( A Sustainable Super Block Community); Situated just blocks away from the hip Mimo district and a short drive to Wynwood, El Portal, Little Haiti, and Miami Shores. Explore the Design District, Downtown Miami, and the beautiful beaches all within a 10-15 minute drive.',
+        description: 'LOCATION - Location location location. My Studio is located in the Upper East neighborhood directly across from Ironside',
         price: 340,
 
       },
@@ -72,7 +72,7 @@ module.exports = {
         lat:  24.33242,
         lng: 36.321523,
         name: 'Sandy Beach Estate',
-        description: "This tiny home is located on the best lot on the property! Gorgeous lakefront view with a wide, green field right in front of the house. As you walk into the house you will be stunned with the impressive floor-to-ceiling tile work and beautiful professional decorations! This house features two sleeping lofts and a sofa couch to accommodate up to 4 guests. The Universal is the perfect tiny home experience for the whole family.",
+        description: "This tiny home is located on the best lot on the property!.",
         price: 34,
 
       },
@@ -85,7 +85,7 @@ module.exports = {
         lat:  54.33242,
         lng: 54.321523,
         name: 'Cape Coral Mansion',
-        description: 'Welcome to our A-frame cabin, nestled into the start of a small pine forest. It’s complete with two cots, a hinged wall/awning, firepit, hammock, and elevated spaces to eat. Just bring your sleeping bag and other camp gear that helps you feel cozy and at home in the woodslands.',
+        description: 'Welcome to our A-frame cabin, nestled into the start of a small pine forest.',
         price: 34,
 
       }
