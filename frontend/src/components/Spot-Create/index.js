@@ -71,18 +71,19 @@ function CreateSpot() {
 
       if (SpotImages.length === 0) {
         errors.push("Please provide an image URL");
-      } else if (SpotImages.length > 3) {
-        errors.push("Please provide a valid  URL");
-      } else {
-        try {
-          const url = new URL(SpotImages);
-          if (url.protocol !== "http:" && url.protocol !== "https:") {
-            errors.push("Please provide a valid HTTP or HTTPS URL for the spot image");
-          }
-        } catch (err) {
-          errors.push("Please provide a valid URL for the spot image");
-        }
-      }
+      } 
+      //  if (SpotImages.length > 3) {
+      //   errors.push("Please provide a valid  URL"); 
+      // } else {
+      //   try {
+      //     const url = new URL(SpotImages);
+      //     if (url.protocol !== "http:" && url.protocol !== "https:") {
+      //       errors.push("Please provide a valid HTTP or HTTPS URL for the spot image");
+      //     }
+      //   } catch (err) {
+      //     errors.push("Please provide a valid URL for the spot image");
+      //   }
+      // }
 
    
 
