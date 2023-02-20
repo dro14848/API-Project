@@ -1,5 +1,27 @@
 # AirBnB Clone
 
+My attempt at cloning AirBnB
+
+I used 
+* Javascript
+* React
+* Redux
+* CSS
+* HTML
+* Express.js in testing 
+* Postgress in live 
+
+Hosted on Render
+
+Home page
+
+![Home Page](/frontend/src/assests/HomeSS.png)
+
+
+
+
+
+
 ## Database Schema Design
 
 
