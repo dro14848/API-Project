@@ -54,7 +54,7 @@ function LoginFormModal() {
         </label>
         <button type="submit">Log In</button>
       </form>
-      <button className="Demo-user" type="submit" onClick={() => dispatch(sessionActions.login({credential:"FakeUser1", password:"password2"})).then(closeModal)} > Demo User</button>
+      <button className="Demo-user" type="submit" onClick={() => dispatch(sessionActions.login({credential:"Demo", password:"demopass1"})).then(closeModal)} > Demo User</button>
       </div>
     </>
   );

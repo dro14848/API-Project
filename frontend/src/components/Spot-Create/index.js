@@ -41,7 +41,7 @@ function CreateSpot() {
         }
 
         
-        console.log("COMPONANT", newSpot)
+        // console.log("COMPONANT", newSpot)
       return dispatch(
         createSpotThunk(newSpot))
       .then((spot) =>{ 

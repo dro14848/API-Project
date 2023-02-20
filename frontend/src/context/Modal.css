@@ -15,17 +15,11 @@
   right: 0;
   left: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 #modal-content {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 500px;
   position: absolute;
-  background-color:white;
-  align-self: center;
-  outline: 2px rgb(225, 25, 25);
-
+  background-color: white;
+  border-radius: 12px;
 }

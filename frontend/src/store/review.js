@@ -75,7 +75,7 @@ export default function reviewReducer (state = initialState, action){
     switch (action.type){
         case CREATE_REVIEW: {
             let newStateCopy = { ...newState.spot}
-            console.log("ACTION", action.review.spotId)
+            // console.log("ACTION", action.review.spotId)
             newStateCopy[action.review.id] = action.review
             newState.spot = newStateCopy
             return newState
