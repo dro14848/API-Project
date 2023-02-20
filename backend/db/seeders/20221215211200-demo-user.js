@@ -13,44 +13,51 @@ module.exports = {
       {
         email: 'demo@user.io',
         username: 'Demo-lition',
-        firstName: 'Demo',
-        lastName: 'Lition',
+        firstName: 'Aramis',
+        lastName: 'LonglasName',
         hashedPassword: bcrypt.hashSync('password')
       },
       {
         email: 'user1@user.io',
-        username: 'FakeUser1',
-        firstName: 'onef',
+        username: 'Sam',
+        firstName: 'Uel',
         lastName: 'lastf',
         hashedPassword: bcrypt.hashSync('password2')
       },
       {
         email: 'user2@user.io',
         username: 'FakeUser2',
-        firstName: 'secondf',
-        lastName: 'secondl',
+        firstName: 'Leandro',
+        lastName: 'Figueiredo',
         hashedPassword: bcrypt.hashSync('password3')
       },
       {
         email: 'user3@user.io',
         username: 'FakeUser3',
-        firstName: 'secondf1',
-        lastName: 'secondl1',
+        firstName: 'Devin',
+        lastName: 'Stovebob',
         hashedPassword: bcrypt.hashSync('password4')
       },
       {
         email: 'user4@user.io',
         username: 'FakeUser4',
-        firstName: 'secondf2',
-        lastName: 'secondl2',
+        firstName: 'Tim',
+        lastName: 'Jim',
         hashedPassword: bcrypt.hashSync('password4')
       },
       {
         email: 'user5@user.io',
         username: 'FakeUser5',
-        firstName: 'secondf3',
-        lastName: 'secondl3',
+        firstName: 'Turner',
+        lastName: 'Otto',
         hashedPassword: bcrypt.hashSync('password5')
+      },
+      {
+        email: 'demoUser@demo.io',
+        username: 'Demo',
+        firstName: 'Demo',
+        lastName: 'User',
+        hashedPassword: bcrypt.hashSync('demopass1')
       },
     ], {});
   },
@@ -59,7 +66,7 @@ module.exports = {
     options.tableName = 'Users';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2', 'FakeUser3', 'FakeUser4', 'FakeUser5'] }
+      username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2', 'FakeUser3', 'FakeUser4', 'FakeUser5', 'Demo'] }
     }, {});
   }
 };

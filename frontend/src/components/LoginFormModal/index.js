@@ -26,7 +26,8 @@ function LoginFormModal() {
 
   return (
     <>
-      <h1>Log In</h1>
+    <div className="MainLoginDiv">
+      <h2 className="LogInText">Log In</h2>
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
@@ -34,7 +35,7 @@ function LoginFormModal() {
           ))}
         </ul>
         <label>
-          Username or Email
+          Username or Email:
           <input
             type="text"
             value={credential}
@@ -43,7 +44,7 @@ function LoginFormModal() {
           />
         </label>
         <label>
-          Password
+          Password:
           <input
             type="password"
             value={password}
@@ -53,7 +54,8 @@ function LoginFormModal() {
         </label>
         <button type="submit">Log In</button>
       </form>
-      <button className="Demo-user" type="submit" onClick={() => dispatch(sessionActions.login({credential:"FakeUser1", password:"password2"})).then(closeModal)} > Demo User</button>
+      <button className="Demo-user" type="submit" onClick={() => dispatch(sessionActions.login({credential:"Demo", password:"demopass1"})).then(closeModal)} > Demo User</button>
+      </div>
     </>
   );
 }

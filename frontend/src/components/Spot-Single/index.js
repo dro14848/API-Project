@@ -7,7 +7,8 @@ import { useModal } from "../../context/Modal";
 import  EditSpot from '../Spot-Edit'
 import GetSpotReviews from "../Review-read";
 import CreateReview from "../Create-Review";
-import { deleteReviewThunk } from "../../store/review";
+import DeleteSpot from "../Spot-delete";
+// import { deleteReviewThunk } from "../../store/review";
 import './Spot.css'
 
 function SpotSingle() {
@@ -17,11 +18,30 @@ function SpotSingle() {
     const {closeModal} = useModal();
     const singleSpot = useSelector((state) => state.Spots.singleSpot)
     const reviews = useSelector((state) => state.Reviews.spot)
+    const userSession = useSelector((state) => state.session.user)
     const reviewsArr = Object.values(reviews)
 
+    // console.log('SPOT INFO',[singleSpot.Owner])
+
+    const ownerInfo = singleSpot.Owner
+    const userReview = reviewsArr.find(review => review.userId === userSession.id);
+
+ 
+
+    let starRating = 0;
+
+    if (reviewsArr.length > 0){
+        reviewsArr.forEach(count => {
+            starRating += count.stars
+        })
+
+        starRating = starRating / reviewsArr.length
+    }
 
 
-      useEffect(() => {
+    // console.log("OWNER",ownerInfo.firstName)
+
+    useEffect(() => {
         dispatch(singleSpotThunk(id))
     },[dispatch, id])
 
@@ -30,43 +50,57 @@ function SpotSingle() {
     return (
         
         <div className="spotdetails">
-            <h1 className="name">{singleSpot.name}</h1>
+            <div className="header">
+            <div className="Spot-name">
+            <h1>{singleSpot.name}</h1>
+            <p>{singleSpot.city}, {singleSpot.state}</p>
+            </div>
+            </div>
+               <div className="spot-images">
+                   {singleSpot?.SpotImages?.map(img => {
+                       return <img id="spotimages" src={img.url} alt={singleSpot.name}/>
+       
+                   })}
+                   <span>
+                    Entire Home Hosted by {ownerInfo?.firstName}
+                   </span>
+            <div className="buttons">
            <div className="Edit-button">
            <OpenModalButton 
-        modalComponent={<EditSpot />}
-        buttonText={"Edit This Spot"}
+            modalComponent={<EditSpot />}
+            buttonText={"Edit This Spot"}
             />
-    
-           </div>
-            <button className="delete-button"
-            onClick={async () => {
-                await dispatch(deleteSpotThunk(singleSpot.id))
-                .then(history.push('/'))
-            }}
-            >
-            Delete This Spot
-            </button> 
-                <div className="spot-images">
-                    {singleSpot?.SpotImages?.map(img => {
-                        return <img id="spotimages" src={img.url} alt={singleSpot.name}/>
-
-                    })}
-            <div className="ratingline">
+            </div>
+            <div className="Delete-Button">
+           <OpenModalButton 
+            modalComponent={<DeleteSpot />}
+            buttonText={"Delete This Spot"}
+            />
+            </div>
+            
+            </div>       
+                <div className="description">
+                <p className="single-review-rating">Average Rating: {starRating.toFixed(2)}</p>
+                <p className="address">Located in: {singleSpot.city}, {singleSpot.state}, {singleSpot.country}</p>
+                <p className="spot-description">{singleSpot.description} </p>
+                </div>
+                <div className="ratingline">
                 <div>
                     <GetSpotReviews />
-                   
                 </div>
-                <div>
-                    <OpenModalButton
-                    modalComponent={<CreateReview/>}
-                    buttonText={"ADD NEW REVIEW"}
-                    />
-                </div>
-            <p className="avgRatinginDetails">Average Rating: {singleSpot.avgStarRating}</p>
-            <p className="address">Address: {singleSpot.address}, {singleSpot.city}, {singleSpot.state}, {singleSpot.country}</p>
-                </div>
+
+                
+                {!userReview && (
+                    <div className="add-review">
+                        <OpenModalButton
+                            modalComponent={<CreateReview />}
+                            buttonText={"ADD NEW REVIEW"}
+                        />
+                    </div>
+                )}
             </div>
         </div>
+    </div>
     )
 }
 

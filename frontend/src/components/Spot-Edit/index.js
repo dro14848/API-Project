@@ -1,11 +1,13 @@
 
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { updateSpotThunk } from "../../store/spot";
 
 function EditSpot () {
     const dispatch = useDispatch();
+    const history = useHistory();
     const { closeModal } = useModal();
 
 
@@ -40,10 +42,23 @@ function EditSpot () {
       // console.log("THUNK", updateSpotThunk)
       // console.log("NEWSPOT", newSpot)
 
-        return dispatch(updateSpotThunk(spot,newSpot)).then(() => closeModal)
+        return dispatch(updateSpotThunk(spot,newSpot))
+        .then(() => closeModal)
+        history.push(`/spots/${spot.Id}`)
+        .catch(
+          async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(data.errors);
+          }
+        )
     }
 
     return (
+      <>
+      { userSession ?
+        userSession.id !== spot.ownerId ? <div className="Owner-Error"> Only Spot Owners can edit a spot</div>
+        :
+        <>
         <div>
              <form className="CreateSpotForm" onSubmit={handleSubmit}>
           <ul>
@@ -110,6 +125,10 @@ function EditSpot () {
   
         </form>
         </div>
+              </>
+              : <div className="loginEdit"> Please Log in to Edit a spot</div>
+              }
+            </>
     )
 }    
 

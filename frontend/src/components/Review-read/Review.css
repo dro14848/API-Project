@@ -7,3 +7,9 @@
 .reviewId {
     outline: 2px solid blue;
 }
+.review-rating::before {
+    content:"★";
+    font-size: 20px;
+    color: #F5A623;
+    margin-right:5px;
+}
