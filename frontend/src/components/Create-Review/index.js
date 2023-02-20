@@ -57,10 +57,10 @@ const handleSubmit = (e) => {
             .catch(
         async (res) => {
           const data = await res.json();
-          
+            console.log("ERROR", data)
           if (data && data.errors) setErrors(data.errors);
         }
-            )
+     )
 }
 
 
@@ -78,7 +78,7 @@ const handleSubmit = (e) => {
                 <h2>Create a Review</h2>
                 <ul>
                     {errors.map((error, idx) => (
-                         <li key={idx}>{error}</li>
+                        <li key={idx}>{error}</li>
                   ))}
                  </ul>
                 <label>

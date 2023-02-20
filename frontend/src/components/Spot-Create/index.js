@@ -17,7 +17,7 @@ function CreateSpot() {
     const [lng, setLng] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState('');
-    const [price, setPrice] = useState("")
+    const [price, setPrice] = useState(1)
     const [SpotImages, setPreviewImg] = useState('')
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
@@ -26,6 +26,55 @@ function CreateSpot() {
       e.preventDefault();
 
       setErrors([]);
+      const errors = [];
+
+      if(address.length < 3) {
+        errors.push("Address needs to be at least 3 characters")
+      }
+      if(address.length > 30) {
+        errors.push("Address needs to be at most 30 characters")
+      }
+      if(city.length < 3) {
+        errors.push("City needs to be at least 3 characters")
+      }
+      if(city.length > 20) {
+        errors.push("City needs to be at most 20 characters")
+      }
+
+      if(state.length < 3) {
+        errors.push("State needs to be at least 3 characters")
+      }
+      if(state.length > 15) {
+        errors.push("State needs to be at most 15 characters")
+      }
+      if(country.length < 3) {
+        errors.push("Country needs to be at least 3 characters")
+      }
+      if(country.length > 15) {
+        errors.push("Country needs to be at most 15 characters")
+      }
+      if(name.length < 3) {
+        errors.push("name needs to be at least 3 characters")
+      }
+      if(name.length > 50) {
+        errors.push("name needs to be at most 50 characters")
+      }
+      if(description.length < 3) {
+        errors.push("Description needs to be at least 3 characters")
+      }
+      if(description.length > 500) {
+        errors.push("Description needs to be at most 500 characters")
+      }
+      if(price < 1 || price > 1000) {
+        errors.push("Pricing must be between $1 and $1,000")
+      }
+   
+
+
+      if (errors.length > 0) {
+        setErrors(errors)
+        return
+    }
 
         const newSpot= {
           address,
@@ -68,7 +117,7 @@ function CreateSpot() {
           </ul>
           <label>
             Address
-            <input className="globalInput"
+            <input className="address-input"
             type="text"
             value={address}
             onChange= {(e) => setAddress(e.target.value)}
@@ -77,7 +126,7 @@ function CreateSpot() {
           </label>
           <label>
             City
-            <input className="globalInput"
+            <input className="city-input"
             type="text"
             value={city}
             onChange={(e)=> setCity(e.target.value)}
@@ -86,7 +135,7 @@ function CreateSpot() {
           </label>
           <label>
             State
-            <input className="globalInput"
+            <input className="state-input"
             type="text"
             value={state}
             onChange={(e) => setState(e.target.value)}
@@ -95,7 +144,7 @@ function CreateSpot() {
           </label>
           <label>
             Country
-            <input className="globalInput"
+            <input className=""
             type="text"
             value={country}
             onChange={(e)=> setCountry(e.target.value)}
@@ -104,7 +153,7 @@ function CreateSpot() {
           </label>
           <label>
             Name
-            <input className="globalInput"
+            <input className="country=input"
             type="text"
             value={name}
             onChange={(e)=> setName(e.target.value)}
@@ -113,7 +162,7 @@ function CreateSpot() {
           </label>
           <label>
             Description
-            <input className="globalInput"
+            <input className=""
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -122,7 +171,7 @@ function CreateSpot() {
           </label>
           <label>
             Price
-            <input className="globalInput"
+            <input className="price-input"
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
@@ -131,7 +180,7 @@ function CreateSpot() {
           </label>
           <label>
             Preview Image 
-            <input className="globalInput"
+            <input className="image-input"
             type="text"
             value={SpotImages}
             onChange={(e) => setPreviewImg(e.target.value)}

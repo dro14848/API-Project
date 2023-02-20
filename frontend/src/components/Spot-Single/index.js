@@ -18,25 +18,15 @@ function SpotSingle() {
     const {closeModal} = useModal();
     const singleSpot = useSelector((state) => state.Spots.singleSpot)
     const reviews = useSelector((state) => state.Reviews.spot)
-    const reviewIdCheck = useSelector((state) => state.Reviews)
     const userSession = useSelector((state) => state.session.user)
     const reviewsArr = Object.values(reviews)
 
     // console.log('SPOT INFO',[singleSpot.Owner])
 
     const ownerInfo = singleSpot.Owner
-    const reviewList = Object.values(reviewIdCheck)
-    // console.log("REVIEW", reviewIdCheck.spot?.userId)
-    let testArr =[];
+    const userReview = reviewsArr.find(review => review.userId === userSession.id);
 
-    // if(reviewList.length > 0){
-    //     reviewList.forEach(test => {
-    //         testArr.push(test.userId)
-    //     })
-    //     return testArr
-    // }
-
-    // console.log(testArr)
+ 
 
     let starRating = 0;
 
@@ -94,21 +84,23 @@ function SpotSingle() {
                 <p className="address">Located in: {singleSpot.city}, {singleSpot.state}, {singleSpot.country}</p>
                 <p className="spot-description">{singleSpot.description} </p>
                 </div>
-            <div className="ratingline">
+                <div className="ratingline">
                 <div>
                     <GetSpotReviews />
-                   
                 </div>
+
                 
-                <div className="add-review">
-                    <OpenModalButton
-                    modalComponent={<CreateReview/>}
-                    buttonText={"ADD NEW REVIEW"}
-                    />
-                </div>
+                {!userReview && (
+                    <div className="add-review">
+                        <OpenModalButton
+                            modalComponent={<CreateReview />}
+                            buttonText={"ADD NEW REVIEW"}
+                        />
+                    </div>
+                )}
             </div>
-                </div>
         </div>
+    </div>
     )
 }
 
