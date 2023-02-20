@@ -40,7 +40,7 @@ const handleSubmit = (e) => {
         errors.push("Star rating must be a number between 1 and 5")
     }
 
-    // if(userSession.id)
+    
         if (errors.length > 0) {
             setErrors(errors)
             return

@@ -19,7 +19,7 @@ module.exports = {
         country: 'USA',
         lat:  -47.76358,
         lng: -12.4727,
-        name: 'New AP',
+        name: 'Cozy Lakehouse Gem',
         description: 'You are invited to be our guest at the "Luxurious Private Vineyard Estate in Temecula Valley”.',
         price: 1350,
 
@@ -32,7 +32,7 @@ module.exports = {
         country: 'USA',
         lat:  13.41234123,
         lng: -11.134443,
-        name: 'House Leandro',
+        name: 'A-Frame Cabin in the mountains',
         description: 'This property was professionally designed inside and out to create the ultimate experience for our guests.',
         price: 46,
 
@@ -45,7 +45,7 @@ module.exports = {
         country: 'USA',
         lat:  13.33242,
         lng: 28.321523,
-        name: 'The other house',
+        name: 'The Forest Hideout',
         description: 'Palm trees rustle and waves gently lap just steps from your doorstep at this tropical manor.',
         price: 34,
 
@@ -58,7 +58,7 @@ module.exports = {
         country: 'USA',
         lat:  14.33242,
         lng: 26.321523,
-        name: 'Bamboo House',
+        name: 'Bamboo House on the cliff (super safe, nothing to worry about!)',
         description: 'LOCATION - Location location location. My Studio is located in the Upper East neighborhood directly across from Ironside',
         price: 340,
 
@@ -84,7 +84,7 @@ module.exports = {
         country: 'USA',
         lat:  54.33242,
         lng: 54.321523,
-        name: 'Cape Coral Mansion',
+        name: 'WHY NOT A CASTLE?',
         description: 'Welcome to our A-frame cabin, nestled into the start of a small pine forest.',
         price: 34,
 

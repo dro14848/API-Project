@@ -1,4 +1,4 @@
-.MainReviewDiv {
+/* .MainReviewDiv {
     outline: 2px solid red;
     display: flex;
 
@@ -12,4 +12,26 @@
     font-size: 20px;
     color: #F5A623;
     margin-right:5px;
-}
+} */
+
+.MainReviewDiv {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+  }
+  
+  .reviewId {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .review-rating {
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .DeleteReviewButton {
+    margin-top: 10px;
+  }

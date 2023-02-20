@@ -84,19 +84,6 @@ function CreateSpot() {
         }
       }
 
-      // if (SpotImages.length === 0){
-      //   errors.push("Please provide a image url")
-      // }
-
-      // if (SpotImages.length > 3){
-      //   errors.push("Please provide an image with a HTTP or HTTPS url link")
-      // }
-
-      // const imageURL = new URL(SpotImages)
-
-      // if(imageURL.protocol !== 'http:' && imageURL.protocol !== "https:") {
-      //   errors.push("please provide a valid URL link for your spot Image.")
-      // }
    
 
 

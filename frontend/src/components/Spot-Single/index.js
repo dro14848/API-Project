@@ -61,9 +61,6 @@ function SpotSingle() {
                        return <img id="spotimages" src={img.url} alt={singleSpot.name}/>
        
                    })}
-                   <span>
-                    Entire Home Hosted by {ownerInfo?.firstName}
-                   </span>
             <div className="buttons">
            <div className="Edit-button">
            <OpenModalButton 
