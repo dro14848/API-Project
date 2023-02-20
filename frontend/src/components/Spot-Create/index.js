@@ -1,5 +1,5 @@
 import { useEffect, useState} from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {createSpotThunk} from '../../store/spot'
 import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
@@ -41,7 +41,7 @@ function CreateSpot() {
         errors.push("City needs to be at most 20 characters")
       }
 
-      if(state.length < 3) {
+      if(state.length < 2) {
         errors.push("State needs to be at least 3 characters")
       }
       if(state.length > 15) {
@@ -68,6 +68,35 @@ function CreateSpot() {
       if(price < 1 || price > 1000) {
         errors.push("Pricing must be between $1 and $1,000")
       }
+
+      if (SpotImages.length === 0) {
+        errors.push("Please provide an image URL");
+      } else if (SpotImages.length > 3) {
+        errors.push("Please provide a valid  URL");
+      } else {
+        try {
+          const url = new URL(SpotImages);
+          if (url.protocol !== "http:" && url.protocol !== "https:") {
+            errors.push("Please provide a valid HTTP or HTTPS URL for the spot image");
+          }
+        } catch (err) {
+          errors.push("Please provide a valid URL for the spot image");
+        }
+      }
+
+      // if (SpotImages.length === 0){
+      //   errors.push("Please provide a image url")
+      // }
+
+      // if (SpotImages.length > 3){
+      //   errors.push("Please provide an image with a HTTP or HTTPS url link")
+      // }
+
+      // const imageURL = new URL(SpotImages)
+
+      // if(imageURL.protocol !== 'http:' && imageURL.protocol !== "https:") {
+      //   errors.push("please provide a valid URL link for your spot Image.")
+      // }
    
 
 
