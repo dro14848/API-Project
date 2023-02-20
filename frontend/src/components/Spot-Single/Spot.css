@@ -2,7 +2,7 @@
     display: flex;
     /* align-items: center; */
     flex-direction: column;
-    outline: 3px  solid blue;
+    /* outline: 3px  solid blue; */
     height: 100%;
     width: 100%;
     justify-content: center;
